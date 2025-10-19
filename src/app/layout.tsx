@@ -1,10 +1,15 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Rethink_Sans } from 'next/font/google'
 import './globals.css'
-import Header from '@/components/layout/Header'
+import Navigation from '@/components/layout/Navigation'
 import Footer from '@/components/layout/Footer'
 
-const inter = Inter({ subsets: ['latin'] })
+const rethinkSans = Rethink_Sans({ 
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700', '800'],
+  style: ['normal', 'italic'],
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: 'LinkedINspire - Connecting Learners with LinkedIn Leaders',
@@ -18,8 +23,8 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={inter.className}>
-        <Header />
+      <body className={`${rethinkSans.className} overflow-x-hidden`}>
+        <Navigation />
         <main className="min-h-screen">{children}</main>
         <Footer />
       </body>

@@ -48,7 +48,8 @@ const config: Config = {
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['"Rethink Sans"', 'Inter', 'system-ui', 'sans-serif'],
+        'rethink': ['"Rethink Sans"', 'sans-serif'],
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in',

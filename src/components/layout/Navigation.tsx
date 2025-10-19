@@ -10,11 +10,12 @@ import Button from '@/components/ui/Button'
 const NAV_ITEMS = [
   { name: 'Home', href: '/' },
   { name: 'About', href: '#about' },
-  { name: 'Course', href: '#course' },
-  { name: 'Curriculum', href: '#curriculum' },
-  { name: 'Instructors', href: '#instructors' },
+  { name: 'Sessions', href: '#sessions' },
+  { name: 'Speakers', href: '#speakers' },
+  { name: 'Team', href: '#team' },
+  { name: 'Resources', href: '#resources' },
   { name: 'Testimonials', href: '#testimonials' },
-  { name: 'FAQ', href: '#faq' },
+  { name: 'Contact', href: '#contact' },
 ]
 
 export default function Navigation() {
@@ -23,17 +24,17 @@ export default function Navigation() {
   const [activeSection, setActiveSection] = useState('')
   const pathname = usePathname()
 
-  // Handle scroll effect
+  // Enhanced scroll effect with threshold
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10)
     }
 
-    window.addEventListener('scroll', handleScroll)
+    window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Track active section for hash links
+  // Track active section with Intersection Observer
   useEffect(() => {
     const handleHashChange = () => {
       setActiveSection(window.location.hash)
@@ -108,11 +109,14 @@ export default function Navigation() {
       className={cn(
         'fixed top-0 w-full z-50 transition-all duration-500',
         isScrolled
-          ? 'backdrop-blur-2xl bg-[#000000]/90 shadow-2xl border-b border-white/20'
-          : 'backdrop-blur-xl bg-[#000000]/70 border-b border-white/10'
+          ? 'backdrop-blur-3xl bg-white/5 shadow-[0_8px_32px_rgba(0,0,0,0.3)] border-b border-white/20'
+          : 'backdrop-blur-xl bg-white/[0.02] border-b border-white/10'
       )}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Gradient overlay for enhanced glass effect */}
+      <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent pointer-events-none"></div>
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link 
@@ -124,11 +128,14 @@ export default function Navigation() {
               window.history.pushState(null, '', '/')
             }}
           >
-            <div className="w-11 h-11 bg-gradient-to-br from-[#0A66C2] via-[#0077B5] to-[#004182] rounded-2xl flex items-center justify-center shadow-lg border border-white/20 backdrop-blur-xl relative overflow-hidden group-hover:scale-110 transition-transform duration-300">
-              <div className="absolute inset-0 bg-gradient-to-br from-white/30 via-transparent to-transparent pointer-events-none"></div>
-              <span className="text-white font-bold text-xl relative z-10">LI</span>
+            <div className="w-11 h-11 bg-gradient-to-br from-amber-400/90 via-yellow-500/80 to-orange-500/90 rounded-2xl flex items-center justify-center shadow-[0_8px_32px_rgba(251,191,36,0.4)] border border-white/30 backdrop-blur-xl relative overflow-hidden group-hover:scale-110 group-hover:shadow-[0_12px_48px_rgba(251,191,36,0.6)] transition-all duration-500">
+              <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-white/10 to-transparent pointer-events-none"></div>
+              <div className="absolute inset-0 bg-gradient-to-tl from-white/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              <svg className="w-6 h-6 text-white relative z-10 drop-shadow-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+              </svg>
             </div>
-            <span className="text-white font-bold text-xl hidden sm:block">
+            <span className="text-white font-bold text-xl hidden sm:block drop-shadow-lg rethink-sans-bold">
               LinkedINspire
             </span>
           </Link>
@@ -141,16 +148,17 @@ export default function Navigation() {
                 href={item.href}
                 onClick={(e) => handleSmoothScroll(e, item.href)}
                 className={cn(
-                  'px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 relative overflow-hidden group',
+                  'px-4 py-2 rounded-xl text-sm rethink-sans-medium transition-all duration-500 relative overflow-hidden group',
                   isActive(item.href)
-                    ? 'text-white backdrop-blur-xl bg-gradient-to-r from-[#0A66C2] to-[#004182] shadow-lg border border-white/20'
-                    : 'text-[#DCE6F1] backdrop-blur-xl hover:text-white hover:bg-white/10 border border-transparent hover:border-white/20'
+                    ? 'text-white backdrop-blur-xl bg-gradient-to-r from-[#0A66C2]/80 to-[#004182]/80 shadow-[0_4px_24px_rgba(10,102,194,0.3)] border border-white/30'
+                    : 'text-white/80 backdrop-blur-xl hover:text-white bg-white/5 hover:bg-white/15 border border-white/10 hover:border-white/30 hover:shadow-[0_4px_24px_rgba(255,255,255,0.1)]'
                 )}
               >
                 {isActive(item.href) && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-white/20 via-transparent to-transparent pointer-events-none"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/30 via-white/10 to-transparent pointer-events-none"></div>
                 )}
                 <span className="relative z-10">{item.name}</span>
+                <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </Link>
             ))}
           </div>
@@ -160,30 +168,38 @@ export default function Navigation() {
             <Button
               variant="primary"
               size="md"
+              className="backdrop-blur-xl bg-gradient-to-r from-[#0A66C2]/80 to-[#0077B5]/80 hover:from-[#0A66C2] hover:to-[#0077B5] border border-white/20 shadow-[0_8px_32px_rgba(10,102,194,0.3)] hover:shadow-[0_12px_48px_rgba(10,102,194,0.5)] transition-all duration-500"
               onClick={() => {
                 const element = document.getElementById('contact')
                 if (element) {
-                  element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                  const headerOffset = 80
+                  const elementPosition = element.getBoundingClientRect().top
+                  const offsetPosition = elementPosition + window.pageYOffset - headerOffset
+                  window.scrollTo({ top: offsetPosition, behavior: 'smooth' })
                 }
               }}
             >
-              Enroll Now
+              Join the Community
             </Button>
           </div>
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden backdrop-blur-xl bg-white/10 p-2 rounded-xl border border-white/20 hover:bg-white/20 transition-all duration-300"
+            className="lg:hidden backdrop-blur-xl bg-white/10 hover:bg-white/20 p-2 rounded-xl border border-white/20 hover:border-white/40 transition-all duration-500 shadow-lg hover:shadow-xl"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
-            {isMobileMenuOpen ? <X size={24} className="text-white" /> : <Menu size={24} className="text-white" />}
+            {isMobileMenuOpen ? (
+              <X size={24} className="text-white drop-shadow-lg" />
+            ) : (
+              <Menu size={24} className="text-white drop-shadow-lg" />
+            )}
           </button>
         </div>
 
         {/* Mobile Navigation Menu */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden py-4 border-t border-white/10 animate-fade-in">
+          <div className="lg:hidden py-4 border-t border-white/10 animate-fade-in backdrop-blur-2xl">
             <div className="space-y-2">
               {NAV_ITEMS.map((item) => (
                 <Link
@@ -191,16 +207,17 @@ export default function Navigation() {
                   href={item.href}
                   onClick={(e) => handleSmoothScroll(e, item.href)}
                   className={cn(
-                    'block px-4 py-3 rounded-xl text-base font-medium transition-all duration-300 relative overflow-hidden',
+                    'block px-4 py-3 rounded-xl text-base font-medium transition-all duration-500 relative overflow-hidden group',
                     isActive(item.href)
-                      ? 'text-white backdrop-blur-xl bg-gradient-to-r from-[#0A66C2] to-[#004182] shadow-lg border border-white/20'
-                      : 'text-[#DCE6F1] backdrop-blur-xl hover:text-white hover:bg-white/10 border border-transparent hover:border-white/20'
+                      ? 'text-white backdrop-blur-xl bg-gradient-to-r from-[#0A66C2]/80 to-[#004182]/80 shadow-[0_4px_24px_rgba(10,102,194,0.3)] border border-white/30'
+                      : 'text-white/80 backdrop-blur-xl hover:text-white bg-white/5 hover:bg-white/15 border border-white/10 hover:border-white/30 hover:shadow-[0_4px_24px_rgba(255,255,255,0.1)]'
                   )}
                 >
                   {isActive(item.href) && (
-                    <div className="absolute inset-0 bg-gradient-to-r from-white/20 via-transparent to-transparent pointer-events-none"></div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/30 via-white/10 to-transparent pointer-events-none"></div>
                   )}
                   <span className="relative z-10">{item.name}</span>
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 </Link>
               ))}
               
@@ -208,16 +225,19 @@ export default function Navigation() {
               <div className="pt-4">
                 <Button
                   variant="primary"
-                  className="w-full"
+                  className="w-full backdrop-blur-xl bg-gradient-to-r from-[#0A66C2]/80 to-[#0077B5]/80 hover:from-[#0A66C2] hover:to-[#0077B5] border border-white/20 shadow-[0_8px_32px_rgba(10,102,194,0.3)] hover:shadow-[0_12px_48px_rgba(10,102,194,0.5)] transition-all duration-500"
                   onClick={() => {
                     setIsMobileMenuOpen(false)
                     const element = document.getElementById('contact')
                     if (element) {
-                      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                      const headerOffset = 80
+                      const elementPosition = element.getBoundingClientRect().top
+                      const offsetPosition = elementPosition + window.pageYOffset - headerOffset
+                      window.scrollTo({ top: offsetPosition, behavior: 'smooth' })
                     }
                   }}
                 >
-                  Enroll Now
+                  Join the Community
                 </Button>
               </div>
             </div>

@@ -7,12 +7,19 @@
 :root {
   --background: #ffffff;
   --foreground: #000000;
-  --linkedin-primary: #0A66C2;
-  --linkedin-dark: #004182;
-  --linkedin-light: #DCE6F1;
-  --linkedin-gray: #56687A;
-  --linkedin-bg: #FDFAF5;
-  --linkedin-border: #E9E5DF;
+  --linkedin-blue: #0A66C2;
+  --linkedin-blue-dark: #004182;
+  --linkedin-blue-light: #E7F3FF;
+  --linkedin-blue-subtle: #F3F8FF;
+  --linkedin-gray-900: #000000;
+  --linkedin-gray-700: #434649;
+  --linkedin-gray-600: #666666;
+  --linkedin-gray-500: #767676;
+  --linkedin-gray-400: #999999;
+  --linkedin-gray-300: #CCCCCC;
+  --linkedin-gray-200: #E8E8E8;
+  --linkedin-gray-100: #F4F4F4;
+  --linkedin-gray-50: #FAFAFA;
 }
 
 @theme inline {

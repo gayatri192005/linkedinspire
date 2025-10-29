@@ -12,9 +12,8 @@ const NAV_ITEMS = [
   { name: 'About', href: '#about' },
   { name: 'Sessions', href: '#sessions' },
   { name: 'Speakers', href: '#speakers' },
+  { name: 'Campus Connect', href: '#campus-connect' },
   { name: 'Team', href: '#team' },
-  { name: 'Resources', href: '#resources' },
-  { name: 'Testimonials', href: '#testimonials' },
   { name: 'Contact', href: '#contact' },
 ]
 

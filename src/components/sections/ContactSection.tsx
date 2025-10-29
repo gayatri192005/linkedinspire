@@ -17,7 +17,7 @@ export default function ContactSection() {
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-[#0A66C2] via-[#0077B5] to-[#0A66C2] mx-auto mb-8 rounded-full shadow-lg shadow-[#0A66C2]/30"></div>
           <p className="text-xl text-[#56687A] max-w-4xl mx-auto leading-relaxed">
-            Ready to join our community? Have questions? We'd love to hear from you!
+            Ready to join our community? Have questions? We&apos;d love to hear from you!
           </p>
         </div>
 
@@ -43,8 +43,15 @@ export default function ContactSection() {
                     <MessageCircle className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <p className="font-semibold text-[#000000]">WhatsApp Community</p>
-                    <p className="text-[#56687A]">Join our active community</p>
+                    <p className="font-semibold text-[#000000]">Social Links</p>
+                    <a 
+                      href="https://linktr.ee/linkedinspire" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-[#0A66C2] hover:text-[#004182] transition-colors"
+                    >
+                      linktr.ee/linkedinspire
+                    </a>
                   </div>
                 </div>
 
@@ -53,8 +60,8 @@ export default function ContactSection() {
                     <Phone className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <p className="font-semibold text-[#000000]">WhatsApp Channel</p>
-                    <p className="text-[#56687A]">Get updates & announcements</p>
+                    <p className="font-semibold text-[#000000]">WhatsApp Community</p>
+                    <p className="text-[#56687A]">Join our active discussions</p>
                   </div>
                 </div>
 

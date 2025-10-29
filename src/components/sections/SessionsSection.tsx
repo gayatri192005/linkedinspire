@@ -1,42 +1,57 @@
 'use client'
 
-import { Calendar, Users, Video, Clock } from 'lucide-react'
+import { Calendar, Users, Clock } from 'lucide-react'
 import Button from '@/components/ui/Button'
 
 export default function SessionsSection() {
   const sessions = [
     {
       id: 1,
-      title: 'Growth Series ft. Swaroop Talks',
-      date: 'October 10, 2025',
+      title: 'LinkedIn Growth Series ft. Swaroop Talks',
+      date: 'November 15, 2025',
       speaker: 'Swaroop Talks',
+      speakerDescription: 'Tech Mentor & Content Creator with 600K+ Followers. Leading expert in LinkedIn growth strategies and content creation techniques.',
       type: 'Live Session',
-      description: 'Learn advanced LinkedIn growth strategies and content creation techniques from one of the top LinkedIn creators.',
-      attendees: 450,
+      attendees: 500,
       duration: '90 min',
-      status: 'upcoming'
+      status: 'upcoming',
+      highlights: ['Growth Strategies', 'Content Creation', 'Engagement Tips']
     },
     {
       id: 2,
-      title: 'LinkedINspire x Harshith Sai',
-      date: 'September 28, 2025', 
-      speaker: 'Harshith Sai',
-      type: 'Recorded Session',
-      description: 'Deep dive into personal branding and professional storytelling on LinkedIn platform.',
+      title: 'LinkedINspire x Harshith Sai Tunuguntla',
+      date: 'October 20, 2025', 
+      speaker: 'Harshith Sai Tunuguntla',
+      speakerDescription: 'LinkedIn Top Voice, Mentor & Software Engineer with 100K+ Followers. Expert in personal branding and professional storytelling.',
+      type: 'Completed Session',
       attendees: 320,
       duration: '75 min',
-      status: 'completed'
+      status: 'completed',
+      highlights: ['Personal Branding', 'Professional Storytelling', 'Profile Optimization']
     },
     {
       id: 3,
       title: 'Career Branding with Karthik Nagapuri',
-      date: 'August 14, 2025',
+      date: 'October 5, 2025',
       speaker: 'Karthik Nagapuri',
-      type: 'Recorded Session', 
-      description: 'Master the art of career branding and positioning yourself as an industry expert.',
+      speakerDescription: 'Public Speaker and expert on the evolving startup ecosystem in India. Helps professionals build strong career brands.',
+      type: 'Completed Session', 
       attendees: 280,
       duration: '80 min',
-      status: 'completed'
+      status: 'completed',
+      highlights: ['Career Branding', 'Startup Ecosystem', 'Industry Leadership']
+    },
+    {
+      id: 4,
+      title: 'LinkedIN Foundation Series ft. Gayatri G & Mythrisri',
+      date: 'September 15, 2025',
+      speaker: 'Gayatri G & Mythrisri Kurra',
+      speakerDescription: 'Co-founders of LinkedINspire, passionate community leaders focused on empowering students and professionals in their LinkedIn journey.',
+      type: 'Completed Session',
+      attendees: 400,
+      duration: '120 min',
+      status: 'completed',
+      highlights: ['LinkedIn Basics', 'Profile Optimization', 'Personal Branding', 'AI Tools']
     }
   ]
 
@@ -59,100 +74,87 @@ export default function SessionsSection() {
 
         {/* Sessions Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
-          {sessions.map((session, index) => (
-            <div key={session.id} className="backdrop-blur-xl bg-white/90 rounded-3xl p-8 border border-white/40 shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 relative overflow-hidden group">
+          {sessions.map((session) => (
+            <div key={session.id} className="backdrop-blur-xl bg-white/90 rounded-3xl overflow-hidden border border-white/40 shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 relative group">
+              {/* Image Header */}
+              <div className="relative h-54 bg-gradient-to-br from-[#0A66C2] to-[#004182] overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#0A66C2]/90 to-[#004182]/90"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-center text-white">
+                    <h4 className="text-lg rethink-sans-bold mb-2">LinkedINspire</h4>
+                    <p className="text-sm opacity-90">{session.type}</p>
+                  </div>
+                </div>
+                
+                {/* Time and Attendee Overlay */}
+                <div className="absolute bottom-4 left-4 flex gap-4">
+                  <div className="flex items-center gap-1 bg-black/30 backdrop-blur-sm px-2 py-1 rounded-md text-white text-xs">
+                    <Clock className="w-3 h-3" />
+                    <span>{session.duration}</span>
+                  </div>
+                  <div className="flex items-center gap-1 bg-black/30 backdrop-blur-sm px-2 py-1 rounded-md text-white text-xs">
+                    <Users className="w-3 h-3" />
+                    <span>{session.attendees}</span>
+                  </div>
+                </div>
+                
+                {/* Status Badge */}
+                <div className="absolute top-4 right-4">
+                  <span className={`px-3 py-1 rounded-full text-sm rethink-sans-semibold ${
+                    session.status === 'upcoming' 
+                      ? 'bg-gradient-to-r from-green-400 to-emerald-500 text-white' 
+                      : 'bg-gradient-to-r from-gray-400 to-gray-500 text-white'
+                  }`}>
+                    {session.status === 'upcoming' ? 'Upcoming' : 'Completed'}
+                  </span>
+                </div>
+              </div>
+
               {/* Glossy overlay */}
               <div className="absolute inset-0 bg-gradient-to-br from-white/60 via-transparent to-transparent pointer-events-none"></div>
               
-              {/* Status Badge */}
-              <div className="absolute top-4 right-4">
-                <span className={`px-3 py-1 rounded-full text-sm rethink-sans-semibold ${
-                  session.status === 'upcoming' 
-                    ? 'bg-gradient-to-r from-green-400 to-emerald-500 text-white' 
-                    : 'bg-gradient-to-r from-gray-400 to-gray-500 text-white'
-                }`}>
-                  {session.status === 'upcoming' ? 'Upcoming' : 'Completed'}
-                </span>
-              </div>
-
-              <div className="relative z-10">
-                {/* Session Type Icon */}
-                <div className="w-16 h-16 bg-gradient-to-br from-[#0A66C2] to-[#004182] rounded-2xl flex items-center justify-center mb-6 shadow-lg shadow-[#0A66C2]/40 group-hover:scale-110 transition-transform duration-300">
-                  {session.type === 'Live Session' ? (
-                    <Video className="w-8 h-8 text-white" />
-                  ) : (
-                    <Calendar className="w-8 h-8 text-white" />
-                  )}
+              <div className="relative z-10 p-8">
+                {/* Date */}
+                <div className="flex items-center gap-2 text-[#0A66C2] mb-2">
+                  <Calendar className="w-4 h-4" />
+                  <span className="text-sm rethink-sans-semibold">{session.date}</span>
                 </div>
-
+                
                 <h3 className="text-xl rethink-sans-bold text-[#000000] mb-3">{session.title}</h3>
-                <p className="text-[#56687A] rethink-sans-regular mb-4 leading-relaxed">{session.description}</p>
-
-                {/* Session Details */}
-                <div className="space-y-3 mb-6">
-                  <div className="flex items-center gap-2 text-[#56687A]">
-                    <Calendar className="w-4 h-4" />
-                    <span className="text-sm">{session.date}</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-[#56687A]">
-                    <Users className="w-4 h-4" />
-                    <span className="text-sm">{session.attendees} attendees</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-[#56687A]">
-                    <Clock className="w-4 h-4" />
-                    <span className="text-sm">{session.duration}</span>
-                  </div>
-                </div>
 
                 {/* Speaker */}
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 bg-gradient-to-br from-amber-400 to-orange-500 rounded-xl flex items-center justify-center text-white rethink-sans-bold text-sm">
-                    {session.speaker.split(' ').map(n => n[0]).join('')}
-                  </div>
-                  <div>
-                    <p className="rethink-sans-semibold text-[#000000]">{session.speaker}</p>
-                    <p className="text-sm text-[#56687A]">Guest Speaker</p>
-                  </div>
+                <div className="mb-6">
+                  <p className="rethink-sans-semibold text-[#000000]">{session.speaker}</p>
+                  <p className="text-sm text-[#56687A]">Guest Speaker</p>
                 </div>
+
+                {/* Session Highlights */}
+                {session.highlights && (
+                  <div className="mb-6">
+                    <h4 className="text-sm rethink-sans-semibold text-[#000000] mb-2">Key Highlights:</h4>
+                    <div className="flex flex-wrap gap-2">
+                      {session.highlights.map((highlight, index) => (
+                        <span 
+                          key={index}
+                          className="px-3 py-1 bg-gradient-to-r from-[#DCE6F1]/80 to-[#DCE6F1]/60 text-[#0A66C2] rounded-full text-xs rethink-sans-medium border border-white/30"
+                        >
+                          {highlight}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 {/* Action Button */}
                 <Button
                   variant={session.status === 'upcoming' ? 'primary' : 'secondary'}
-                  className="w-full"
+                  className={`w-full ${session.status === 'completed' ? 'border-2 border-[#0A66C2] text-[#0A66C2] hover:bg-[#0A66C2] hover:text-white' : ''}`}
                 >
-                  {session.status === 'upcoming' ? 'Join Session' : 'View Highlights'}
+                  {session.status === 'upcoming' ? 'Register Now' : 'View Recording'}
                 </Button>
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Community Impact */}
-        <div className="backdrop-blur-2xl bg-gradient-to-r from-[#0A66C2]/95 via-[#0077B5]/95 to-[#004182]/95 rounded-3xl p-12 text-white overflow-hidden shadow-2xl shadow-[#0A66C2]/40 border border-white/20">
-          {/* Animated glow */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent pointer-events-none"></div>
-          
-          {/* Decorative gradient orbs */}
-          <div className="absolute -top-20 -right-20 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
-          <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-[#004182]/30 rounded-full blur-3xl"></div>
-          
-          <div className="relative z-10">
-            <h3 className="text-3xl rethink-sans-bold mb-6 text-center">Our Community Impact</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-              <div>
-                <div className="text-4xl rethink-sans-bold mb-2">XXXX+</div>
-                <p className="text-white/90">Students Impacted</p>
-              </div>
-              <div>
-                <div className="text-4xl rethink-sans-bold mb-2">5+</div>
-                <p className="text-white/90">Live Sessions</p>
-              </div>
-              <div>
-                <div className="text-4xl rethink-sans-bold mb-2">4</div>
-                <p className="text-white/90">Top Guest Speakers</p>
-              </div>
-            </div>
-          </div>
         </div>
       </div>
     </section>

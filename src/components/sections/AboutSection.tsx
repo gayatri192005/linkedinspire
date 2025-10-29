@@ -14,8 +14,9 @@ export default function AboutSection() {
           </h2>
           <div className="w-24 h-1 bg-gradient-to-r from-[#0A66C2] via-[#0077B5] to-[#0A66C2] mx-auto mb-8 rounded-full shadow-lg shadow-[#0A66C2]/30"></div>
           <p className="text-xl rethink-sans-medium text-[#56687A] max-w-4xl mx-auto leading-relaxed">
-            A student-led community empowering individuals to grow their LinkedIn presence, 
-            learn from top creators, and get inspired through real-world experiences.
+            LinkedINspire is a community-driven initiative that brings together LinkedIn growth experts, 
+            top creators, and ambitious professionals to share knowledge, strategies, and real success stories 
+            that inspire authentic growth and meaningful connections.
           </p>
         </div>
 
@@ -28,7 +29,7 @@ export default function AboutSection() {
             <div className="relative z-10">
               <h3 className="text-xl rethink-sans-bold text-[#000000] mb-4">Who are we?</h3>
               <p className="text-[#56687A] leading-relaxed mb-4">
-                We are a passionate community of LinkedIn enthusiasts, creators, and professionals dedicated to empowering individuals in their professional journey.
+                We are a passionate community of LinkedIn enthusiasts, creators, and professionals who believe in the power of authentic storytelling and genuine connections. Our mission is to democratize LinkedIn growth by sharing proven strategies from industry leaders.
               </p>
               <div className="flex items-center gap-2 text-[#0A66C2] rethink-sans-semibold">
                 <Users className="w-5 h-5" />
@@ -44,7 +45,7 @@ export default function AboutSection() {
             <div className="relative z-10">
               <h3 className="text-2xl rethink-sans-bold text-[#000000] mb-4">What makes us different?</h3>
               <p className="text-[#56687A] leading-relaxed mb-4">
-                Unlike traditional courses, we focus on real-world impact through live sessions, peer learning, and direct mentorship from LinkedIn top voices.
+                Unlike traditional training programs, we focus on building a supportive community where knowledge flows freely. Our speakers aren&apos;t just experts – they&apos;re mentors who provide 1:1 feedback, exclusive resources, and ongoing support to help you succeed.
               </p>
               <div className="flex items-center gap-2 text-[#0A66C2] rethink-sans-semibold">
                 <TrendingUp className="w-5 h-5" />
@@ -110,7 +111,7 @@ export default function AboutSection() {
           <div className="absolute -bottom-20 -left-20 w-64 h-64 bg-[#004182]/30 rounded-full blur-3xl"></div>
           
           <p className="text-2xl md:text-3xl font-semibold italic relative z-10 leading-relaxed">
-            "A community driven Initiative to help students & professionals build their LinkedIn presence, grow their network & get inspired"
+            &ldquo;A community driven Initiative to help students & professionals build their LinkedIn presence, grow their network & get inspired&rdquo;
           </p>
         </div>
       </div>

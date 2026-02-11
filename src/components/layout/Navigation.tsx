@@ -3,9 +3,10 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, User, LogOut } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import Button from '@/components/ui/Button'
+import { apiService } from '@/lib/api'
 
 const NAV_ITEMS = [
   { name: 'Home', href: '/' },
@@ -21,6 +22,8 @@ export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('')
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [currentUser, setCurrentUser] = useState<any>(null)
   const pathname = usePathname()
 
   // Enhanced scroll effect with threshold
@@ -31,6 +34,27 @@ export default function Navigation() {
 
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  // Check authentication status
+  useEffect(() => {
+    const checkAuth = () => {
+      const authenticated = apiService.isAuthenticated()
+      setIsAuthenticated(authenticated)
+      if (authenticated) {
+        setCurrentUser(apiService.getCurrentUser())
+      }
+    }
+
+    checkAuth()
+
+    // Listen for storage changes (for cross-tab sync)
+    const handleStorageChange = () => {
+      checkAuth()
+    }
+
+    window.addEventListener('storage', handleStorageChange)
+    return () => window.removeEventListener('storage', handleStorageChange)
   }, [])
 
   // Track active section with Intersection Observer
@@ -103,13 +127,28 @@ export default function Navigation() {
     return pathname === href
   }
 
+  // Handle logout
+  const handleLogout = async () => {
+    try {
+      await apiService.logout()
+      window.location.href = '/'
+    } catch (error) {
+      console.error('Logout error:', error)
+      // Even if logout fails, clear local storage and redirect
+      localStorage.removeItem('token')
+      localStorage.removeItem('user')
+      localStorage.removeItem('isLoggedIn')
+      window.location.href = '/'
+    }
+  }
+
   return (
     <nav
       className={cn(
         'fixed top-0 w-full z-50 transition-all duration-500',
         isScrolled
-          ? 'backdrop-blur-3xl bg-white/5 shadow-[0_8px_32px_rgba(0,0,0,0.3)] border-b border-white/20'
-          : 'backdrop-blur-xl bg-white/[0.02] border-b border-white/10'
+          ? 'backdrop-blur-2xl bg-white/95 shadow-[0_8px_32px_rgba(0,0,0,0.15)] border-b border-gray-200/50'
+          : 'backdrop-blur-xl bg-gradient-to-r from-gray-900/95 via-gray-800/95 to-gray-900/95 border-b border-white/10'
       )}
     >
       {/* Gradient overlay for enhanced glass effect */}
@@ -134,7 +173,10 @@ export default function Navigation() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
               </svg>
             </div>
-            <span className="text-white font-bold text-xl hidden sm:block drop-shadow-lg rethink-sans-bold">
+            <span className={cn(
+              "font-bold text-xl hidden sm:block drop-shadow-lg rethink-sans-bold transition-colors duration-500",
+              isScrolled ? "text-gray-900" : "text-white"
+            )}>
               LinkedINspire
             </span>
           </Link>
@@ -149,8 +191,12 @@ export default function Navigation() {
                 className={cn(
                   'px-4 py-2 rounded-xl text-sm rethink-sans-medium transition-all duration-500 relative overflow-hidden group',
                   isActive(item.href)
-                    ? 'text-white backdrop-blur-xl bg-gradient-to-r from-[#0A66C2]/80 to-[#004182]/80 shadow-[0_4px_24px_rgba(10,102,194,0.3)] border border-white/30'
-                    : 'text-white/80 backdrop-blur-xl hover:text-white bg-white/5 hover:bg-white/15 border border-white/10 hover:border-white/30 hover:shadow-[0_4px_24px_rgba(255,255,255,0.1)]'
+                    ? isScrolled
+                      ? 'text-white backdrop-blur-xl bg-gradient-to-r from-[#0A66C2]/90 to-[#004182]/90 shadow-[0_4px_24px_rgba(10,102,194,0.3)] border border-white/30'
+                      : 'text-white backdrop-blur-xl bg-gradient-to-r from-[#0A66C2]/80 to-[#004182]/80 shadow-[0_4px_24px_rgba(10,102,194,0.3)] border border-white/30'
+                    : isScrolled
+                      ? 'text-gray-700 backdrop-blur-xl hover:text-gray-900 bg-white/60 hover:bg-white/80 border border-gray-200/50 hover:border-gray-300/70 hover:shadow-[0_4px_24px_rgba(0,0,0,0.1)]'
+                      : 'text-white/90 backdrop-blur-xl hover:text-white bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/40 hover:shadow-[0_4px_24px_rgba(255,255,255,0.1)]'
                 )}
               >
                 {isActive(item.href) && (
@@ -162,43 +208,101 @@ export default function Navigation() {
             ))}
           </div>
 
-          {/* CTA Button - Desktop */}
-          <div className="hidden lg:block">
-            <Button
-              variant="primary"
-              size="md"
-              className="backdrop-blur-xl bg-gradient-to-r from-[#0A66C2]/80 to-[#0077B5]/80 hover:from-[#0A66C2] hover:to-[#0077B5] border border-white/20 shadow-[0_8px_32px_rgba(10,102,194,0.3)] hover:shadow-[0_12px_48px_rgba(10,102,194,0.5)] transition-all duration-500"
-              onClick={() => {
-                const element = document.getElementById('contact')
-                if (element) {
-                  const headerOffset = 80
-                  const elementPosition = element.getBoundingClientRect().top
-                  const offsetPosition = elementPosition + window.pageYOffset - headerOffset
-                  window.scrollTo({ top: offsetPosition, behavior: 'smooth' })
-                }
-              }}
-            >
-              Join the Community
-            </Button>
+          {/* Auth Buttons - Desktop */}
+          <div className="hidden lg:flex items-center space-x-3">
+            {isAuthenticated ? (
+              <>
+                {/* User Menu */}
+                <div className="flex items-center space-x-3">
+                  <div className="flex items-center space-x-2 px-3 py-2 rounded-xl bg-white/10 backdrop-blur-xl border border-white/20">
+                    <User size={16} className={cn("drop-shadow-lg", isScrolled ? "text-gray-700" : "text-white")} />
+                    <span className={cn("text-sm font-medium rethink-sans-medium", isScrolled ? "text-gray-700" : "text-white")}>
+                      {currentUser?.name?.split(' ')[0] || 'User'}
+                    </span>
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="md"
+                    className={cn(
+                      "backdrop-blur-xl transition-all duration-500",
+                      isScrolled
+                        ? "bg-gray-100/80 hover:bg-gray-200/80 text-gray-700 border-gray-300/50 hover:border-gray-400/70 shadow-[0_4px_16px_rgba(0,0,0,0.1)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.15)]"
+                        : "bg-white/10 hover:bg-white/20 text-white border-white/30 hover:border-white/50 shadow-[0_4px_16px_rgba(255,255,255,0.1)] hover:shadow-[0_8px_32px_rgba(255,255,255,0.2)]"
+                    )}
+                    onClick={() => window.location.href = '/dashboard'}
+                  >
+                    Dashboard
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="md"
+                    className={cn(
+                      "backdrop-blur-xl transition-all duration-500 flex items-center space-x-2",
+                      isScrolled
+                        ? "bg-red-100/80 hover:bg-red-200/80 text-red-700 border-red-300/50 hover:border-red-400/70 shadow-[0_4px_16px_rgba(0,0,0,0.1)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.15)]"
+                        : "bg-red-500/20 hover:bg-red-500/30 text-white border-red-400/30 hover:border-red-400/50 shadow-[0_4px_16px_rgba(255,255,255,0.1)] hover:shadow-[0_8px_32px_rgba(255,255,255,0.2)]"
+                    )}
+                    onClick={handleLogout}
+                  >
+                    <LogOut size={16} />
+                    <span>Logout</span>
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <>
+                <Button
+                  variant="outline"
+                  size="md"
+                  className={cn(
+                    "backdrop-blur-xl transition-all duration-500",
+                    isScrolled
+                      ? "bg-gray-100/80 hover:bg-gray-200/80 text-gray-700 border-gray-300/50 hover:border-gray-400/70 shadow-[0_4px_16px_rgba(0,0,0,0.1)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.15)]"
+                      : "bg-white/10 hover:bg-white/20 text-white border-white/30 hover:border-white/50 shadow-[0_4px_16px_rgba(255,255,255,0.1)] hover:shadow-[0_8px_32px_rgba(255,255,255,0.2)]"
+                  )}
+                  onClick={() => window.location.href = '/login'}
+                >
+                  Login
+                </Button>
+                <Button
+                  variant="primary"
+                  size="md"
+                  className="backdrop-blur-xl bg-gradient-to-r from-[#0A66C2]/90 to-[#0077B5]/90 hover:from-[#0A66C2] hover:to-[#0077B5] border border-white/20 shadow-[0_8px_32px_rgba(10,102,194,0.3)] hover:shadow-[0_12px_48px_rgba(10,102,194,0.5)] transition-all duration-500"
+                  onClick={() => window.location.href = '/signup'}
+                >
+                  Sign Up
+                </Button>
+              </>
+            )}
           </div>
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden backdrop-blur-xl bg-white/10 hover:bg-white/20 p-2 rounded-xl border border-white/20 hover:border-white/40 transition-all duration-500 shadow-lg hover:shadow-xl"
+            className={cn(
+              "lg:hidden backdrop-blur-xl p-2 rounded-xl border transition-all duration-500 shadow-lg hover:shadow-xl",
+              isScrolled
+                ? "bg-gray-100/80 hover:bg-gray-200/80 text-gray-700 border-gray-300/50 hover:border-gray-400/70"
+                : "bg-white/10 hover:bg-white/20 text-white border-white/20 hover:border-white/40"
+            )}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
           >
             {isMobileMenuOpen ? (
-              <X size={24} className="text-white drop-shadow-lg" />
+              <X size={24} className={cn("drop-shadow-lg", isScrolled ? "text-gray-700" : "text-white")} />
             ) : (
-              <Menu size={24} className="text-white drop-shadow-lg" />
+              <Menu size={24} className={cn("drop-shadow-lg", isScrolled ? "text-gray-700" : "text-white")} />
             )}
           </button>
         </div>
 
         {/* Mobile Navigation Menu */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden py-4 border-t border-white/10 animate-fade-in backdrop-blur-2xl">
+          <div className={cn(
+            "lg:hidden py-4 border-t animate-fade-in backdrop-blur-2xl",
+            isScrolled
+              ? "border-gray-200/50 bg-white/95"
+              : "border-white/10 bg-gray-900/95"
+          )}>
             <div className="space-y-2">
               {NAV_ITEMS.map((item) => (
                 <Link
@@ -209,7 +313,9 @@ export default function Navigation() {
                     'block px-4 py-3 rounded-xl text-base font-medium transition-all duration-500 relative overflow-hidden group',
                     isActive(item.href)
                       ? 'text-white backdrop-blur-xl bg-gradient-to-r from-[#0A66C2]/80 to-[#004182]/80 shadow-[0_4px_24px_rgba(10,102,194,0.3)] border border-white/30'
-                      : 'text-white/80 backdrop-blur-xl hover:text-white bg-white/5 hover:bg-white/15 border border-white/10 hover:border-white/30 hover:shadow-[0_4px_24px_rgba(255,255,255,0.1)]'
+                      : isScrolled
+                        ? 'text-gray-700 backdrop-blur-xl hover:text-gray-900 bg-white/60 hover:bg-white/80 border border-gray-200/50 hover:border-gray-300/70 hover:shadow-[0_4px_24px_rgba(0,0,0,0.1)]'
+                        : 'text-white/90 backdrop-blur-xl hover:text-white bg-white/10 hover:bg-white/20 border border-white/20 hover:border-white/40 hover:shadow-[0_4px_24px_rgba(255,255,255,0.1)]'
                   )}
                 >
                   {isActive(item.href) && (
@@ -220,24 +326,67 @@ export default function Navigation() {
                 </Link>
               ))}
               
-              {/* Mobile CTA Button */}
-              <div className="pt-4">
-                <Button
-                  variant="primary"
-                  className="w-full backdrop-blur-xl bg-gradient-to-r from-[#0A66C2]/80 to-[#0077B5]/80 hover:from-[#0A66C2] hover:to-[#0077B5] border border-white/20 shadow-[0_8px_32px_rgba(10,102,194,0.3)] hover:shadow-[0_12px_48px_rgba(10,102,194,0.5)] transition-all duration-500"
-                  onClick={() => {
-                    setIsMobileMenuOpen(false)
-                    const element = document.getElementById('contact')
-                    if (element) {
-                      const headerOffset = 80
-                      const elementPosition = element.getBoundingClientRect().top
-                      const offsetPosition = elementPosition + window.pageYOffset - headerOffset
-                      window.scrollTo({ top: offsetPosition, behavior: 'smooth' })
-                    }
-                  }}
-                >
-                  Join the Community
-                </Button>
+              {/* Mobile Auth Buttons */}
+              <div className="pt-4 space-y-3">
+                {isAuthenticated ? (
+                  <>
+                    {/* User Info */}
+                    <div className="px-4 py-3 rounded-xl bg-white/10 backdrop-blur-xl border border-white/20">
+                      <div className="flex items-center space-x-3">
+                        <User size={20} className="text-white" />
+                        <div>
+                          <p className="text-white font-medium">{currentUser?.name || 'User'}</p>
+                          <p className="text-white/80 text-sm">{currentUser?.email}</p>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <Button
+                      variant="outline"
+                      className="w-full backdrop-blur-xl bg-white/10 hover:bg-white/20 text-white border-white/30 hover:border-white/50 shadow-[0_4px_16px_rgba(255,255,255,0.1)] hover:shadow-[0_8px_32px_rgba(255,255,255,0.2)] transition-all duration-500"
+                      onClick={() => {
+                        setIsMobileMenuOpen(false)
+                        window.location.href = '/dashboard'
+                      }}
+                    >
+                      Dashboard
+                    </Button>
+                    <Button
+                      variant="outline"
+                      className="w-full backdrop-blur-xl bg-red-500/20 hover:bg-red-500/30 text-white border-red-400/30 hover:border-red-400/50 shadow-[0_4px_16px_rgba(255,255,255,0.1)] hover:shadow-[0_8px_32px_rgba(255,255,255,0.2)] transition-all duration-500 flex items-center justify-center space-x-2"
+                      onClick={() => {
+                        setIsMobileMenuOpen(false)
+                        handleLogout()
+                      }}
+                    >
+                      <LogOut size={16} />
+                      <span>Logout</span>
+                    </Button>
+                  </>
+                ) : (
+                  <>
+                    <Button
+                      variant="outline"
+                      className="w-full backdrop-blur-xl bg-white/10 hover:bg-white/20 text-white border-white/30 hover:border-white/50 shadow-[0_4px_16px_rgba(255,255,255,0.1)] hover:shadow-[0_8px_32px_rgba(255,255,255,0.2)] transition-all duration-500"
+                      onClick={() => {
+                        setIsMobileMenuOpen(false)
+                        window.location.href = '/login'
+                      }}
+                    >
+                      Login
+                    </Button>
+                    <Button
+                      variant="primary"
+                      className="w-full backdrop-blur-xl bg-gradient-to-r from-[#0A66C2]/90 to-[#0077B5]/90 hover:from-[#0A66C2] hover:to-[#0077B5] border border-white/20 shadow-[0_8px_32px_rgba(10,102,194,0.3)] hover:shadow-[0_12px_48px_rgba(10,102,194,0.5)] transition-all duration-500"
+                      onClick={() => {
+                        setIsMobileMenuOpen(false)
+                        window.location.href = '/signup'
+                      }}
+                    >
+                      Sign Up
+                    </Button>
+                  </>
+                )}
               </div>
             </div>
           </div>

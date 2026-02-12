@@ -1,12 +1,36 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, User, LogOut } from 'lucide-react'
 import Button from '@/components/ui/Button'
+import { apiService } from '@/lib/api'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+
+  useEffect(() => {
+    // Check authentication status
+    const isAuth = apiService.isAuthenticated()
+    setIsAuthenticated(isAuth)
+  }, [])
+
+  const handleLogout = async () => {
+    try {
+      await apiService.logout()
+      setIsAuthenticated(false)
+      setIsMenuOpen(false)
+      // Redirect to home
+      window.location.href = '/'
+    } catch (error) {
+      console.error('Logout error:', error)
+      localStorage.removeItem('token')
+      localStorage.removeItem('user')
+      localStorage.removeItem('isLoggedIn')
+      window.location.href = '/'
+    }
+  }
 
   const navItems = [
     { name: 'Home', href: '/' },
@@ -44,9 +68,34 @@ export default function Header() {
                 <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </Link>
             ))}
-            <Button variant="primary" className="ml-2 backdrop-blur-xl bg-gradient-to-r from-[#0A66C2]/80 to-[#0077B5]/80 hover:from-[#0A66C2] hover:to-[#0077B5] border border-white/20 shadow-[0_8px_32px_rgba(10,102,194,0.3)] hover:shadow-[0_12px_48px_rgba(10,102,194,0.5)] transition-all duration-500">
-              Join the Community
-            </Button>
+            
+            {isAuthenticated ? (
+              <div className="flex items-center space-x-2 ml-4">
+                <Link
+                  href="/home"
+                  className="px-4 py-2 rounded-xl text-white/80 hover:text-white backdrop-blur-xl bg-white/5 hover:bg-white/15 transition-all duration-500 font-medium border border-white/10 hover:border-white/30 hover:shadow-[0_4px_24px_rgba(255,255,255,0.1)] relative overflow-hidden group flex items-center space-x-2"
+                >
+                  <User size={16} />
+                  <span className="relative z-10">Profile</span>
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                </Link>
+                <Button 
+                  variant="outline" 
+                  size="sm"
+                  onClick={handleLogout}
+                  className="flex items-center space-x-2"
+                >
+                  <LogOut size={16} />
+                  <span>Logout</span>
+                </Button>
+              </div>
+            ) : (
+              <Button variant="primary" className="ml-2 backdrop-blur-xl bg-gradient-to-r from-[#0A66C2]/80 to-[#0077B5]/80 hover:from-[#0A66C2] hover:to-[#0077B5] border border-white/20 shadow-[0_8px_32px_rgba(10,102,194,0.3)] hover:shadow-[0_12px_48px_rgba(10,102,194,0.5)] transition-all duration-500">
+                <Link href="/login">
+                  Join the Community
+                </Link>
+              </Button>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -77,10 +126,40 @@ export default function Header() {
                 <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
               </Link>
             ))}
+            
             <div className="mt-4">
-              <Button variant="primary" className="w-full backdrop-blur-xl bg-gradient-to-r from-[#0A66C2]/80 to-[#0077B5]/80 hover:from-[#0A66C2] hover:to-[#0077B5] border border-white/20 shadow-[0_8px_32px_rgba(10,102,194,0.3)] hover:shadow-[0_12px_48px_rgba(10,102,194,0.5)] transition-all duration-500">
-                Join the Community
-              </Button>
+              {isAuthenticated ? (
+                <div className="space-y-2">
+                  <Link
+                    href="/home"
+                    className="block w-full px-4 py-3 rounded-xl text-white/80 hover:text-white backdrop-blur-xl bg-white/5 hover:bg-white/15 transition-all duration-500 border border-white/10 hover:border-white/30 hover:shadow-[0_4px_24px_rgba(255,255,255,0.1)] relative overflow-hidden group text-center mb-2"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <span className="relative z-10 flex items-center justify-center space-x-2">
+                      <User size={16} />
+                      <span>Profile</span>
+                    </span>
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  </Link>
+                  <Button 
+                    variant="outline" 
+                    className="w-full flex items-center justify-center space-x-2"
+                    onClick={() => {
+                      setIsMenuOpen(false)
+                      handleLogout()
+                    }}
+                  >
+                    <LogOut size={16} />
+                    <span>Logout</span>
+                  </Button>
+                </div>
+              ) : (
+                <Button variant="primary" className="w-full backdrop-blur-xl bg-gradient-to-r from-[#0A66C2]/80 to-[#0077B5]/80 hover:from-[#0A66C2] hover:to-[#0077B5] border border-white/20 shadow-[0_8px_32px_rgba(10,102,194,0.3)] hover:shadow-[0_12px_48px_rgba(10,102,194,0.5)] transition-all duration-500">
+                  <Link href="/login" onClick={() => setIsMenuOpen(false)}>
+                    Join the Community
+                  </Link>
+                </Button>
+              )}
             </div>
           </div>
         )}

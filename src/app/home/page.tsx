@@ -7,7 +7,7 @@ import { User, Mail, Calendar, Settings, LogOut, ArrowLeft } from 'lucide-react'
 import Button from '@/components/ui/Button'
 import { apiService, User as UserType } from '@/lib/api'
 
-export default function DashboardPage() {
+export default function HomePage() {
   const [user, setUser] = useState<UserType | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const router = useRouter()
@@ -77,7 +77,7 @@ export default function DashboardPage() {
               className="flex items-center space-x-2"
             >
               <LogOut size={16} />
-              <span>logout</span>
+              <span>Logout</span>
             </Button>
           </div>
         </div>

@@ -11,24 +11,26 @@ export interface SignupData {
   password: string;
 }
 
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  avatar?: string;
+  createdAt: string;
+}
+
 export interface AuthResponse {
   success: boolean;
   token?: string;
-  user?: {
-    id: string;
-    name: string;
-    email: string;
-    role: string;
-    avatar?: string;
-    createdAt: string;
-  };
+  user?: User;
   message?: string;
 }
 
 export interface ApiResponse {
   success: boolean;
   message?: string;
-  data?: any;
+  data?: Record<string, unknown>;
 }
 
 class ApiService {
@@ -156,7 +158,7 @@ class ApiService {
   }
 
   // Helper method to get current user
-  getCurrentUser(): any {
+  getCurrentUser(): User | null {
     if (typeof window === 'undefined') return null;
     const userStr = localStorage.getItem('user');
     return userStr ? JSON.parse(userStr) : null;

@@ -6,7 +6,9 @@ import { usePathname } from 'next/navigation'
 import { Menu, X, User, LogOut } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import Button from '@/components/ui/Button'
-import { apiService } from '@/lib/api'
+import { apiService, User as UserType } from '@/lib/api'
+import { useAuth } from '@/context/authContext'
+import { useRouter } from 'next/navigation'
 
 const NAV_ITEMS = [
   { name: 'Home', href: '/' },
@@ -23,18 +25,31 @@ export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('')
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [currentUser, setCurrentUser] = useState<any>(null)
+  const [currentUser, setCurrentUser] = useState<UserType | null>(null)
   const pathname = usePathname()
+  const { loggedIn, logout } = useAuth()
+  const router = useRouter()
+
 
   // Enhanced scroll effect with threshold
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10)
-    }
+  // Enhanced scroll effect with threshold + Home auto-active
+useEffect(() => {
+  const handleScroll = () => {
+    const y = window.scrollY
 
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    // keep navbar style constant
+    setIsScrolled(false)
+
+    // only control active nav highlight
+    if (y < 120) {
+      setActiveSection('')
+    }
+  }
+
+  window.addEventListener('scroll', handleScroll, { passive: true })
+  return () => window.removeEventListener('scroll', handleScroll)
+}, [])
+
 
   // Check authentication status
   useEffect(() => {
@@ -55,7 +70,7 @@ export default function Navigation() {
 
     window.addEventListener('storage', handleStorageChange)
     return () => window.removeEventListener('storage', handleStorageChange)
-  }, [])
+  }, [loggedIn])
 
   // Track active section with Intersection Observer
   useEffect(() => {
@@ -65,7 +80,7 @@ export default function Navigation() {
 
     handleHashChange()
     window.addEventListener('hashchange', handleHashChange)
-    
+
     const observerOptions = {
       root: null,
       rootMargin: '-20% 0px -80% 0px',
@@ -95,29 +110,39 @@ export default function Navigation() {
 
   // Smooth scroll handler
   const handleSmoothScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    if (href.startsWith('#')) {
-      e.preventDefault()
-      const targetId = href.substring(1)
-      const targetElement = document.getElementById(targetId)
 
-      if (targetElement) {
-        const headerOffset = 80
-        const elementPosition = targetElement.getBoundingClientRect().top
-        const offsetPosition = elementPosition + window.pageYOffset - headerOffset
+  // 🔥 if not on home page → go to home + section
+  if (pathname !== '/' && href.startsWith('#')) {
+    e.preventDefault()
+    router.push('/' + href)
+    setIsMobileMenuOpen(false)
+    return
+  }
 
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth',
-        })
+  if (href.startsWith('#')) {
+    e.preventDefault()
+    const targetId = href.substring(1)
+    const targetElement = document.getElementById(targetId)
 
-        window.history.pushState(null, '', href)
-        setActiveSection(href)
-        setIsMobileMenuOpen(false)
-      }
-    } else {
+    if (targetElement) {
+      const headerOffset = 80
+      const elementPosition = targetElement.getBoundingClientRect().top
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      })
+
+      window.history.pushState(null, '', href)
+      setActiveSection(href)
       setIsMobileMenuOpen(false)
     }
+  } else {
+    setIsMobileMenuOpen(false)
   }
+}
+
 
   // Check if link is active
   const isActive = (href: string) => {
@@ -131,16 +156,14 @@ export default function Navigation() {
   const handleLogout = async () => {
     try {
       await apiService.logout()
-      window.location.href = '/'
     } catch (error) {
       console.error('Logout error:', error)
-      // Even if logout fails, clear local storage and redirect
-      localStorage.removeItem('token')
-      localStorage.removeItem('user')
-      localStorage.removeItem('isLoggedIn')
-      window.location.href = '/'
+    } finally {
+      logout()        // updates AuthContext state
+      router.push('/') // client-side redirect
     }
   }
+  87
 
   return (
     <nav
@@ -153,12 +176,12 @@ export default function Navigation() {
     >
       {/* Gradient overlay for enhanced glass effect */}
       <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent pointer-events-none"></div>
-      
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link 
-            href="/" 
+          <Link
+            href="/"
             className="flex items-center space-x-2 group"
             onClick={(e) => {
               e.preventDefault()
@@ -210,29 +233,31 @@ export default function Navigation() {
 
           {/* Auth Buttons - Desktop */}
           <div className="hidden lg:flex items-center space-x-3">
-            {isAuthenticated ? (
+            {loggedIn ? (
               <>
                 {/* User Menu */}
                 <div className="flex items-center space-x-3">
-                  <div className="flex items-center space-x-2 px-3 py-2 rounded-xl bg-white/10 backdrop-blur-xl border border-white/20">
-                    <User size={16} className={cn("drop-shadow-lg", isScrolled ? "text-gray-700" : "text-white")} />
-                    <span className={cn("text-sm font-medium rethink-sans-medium", isScrolled ? "text-gray-700" : "text-white")}>
+
+                  {/* User chip → Dashboard */}
+                  <button
+                    onClick={() => router.push('/dashboard')}
+                    className="flex items-center space-x-2 px-3 py-2 rounded-xl bg-white/10 backdrop-blur-xl border border-white/20 hover:bg-white/20 transition-all duration-300"
+                  >
+                    <User
+                      size={16}
+                      className={cn("drop-shadow-lg", isScrolled ? "text-gray-700" : "text-white")}
+                    />
+                    <span
+                      className={cn(
+                        "text-sm font-medium rethink-sans-medium",
+                        isScrolled ? "text-gray-700" : "text-white"
+                      )}
+                    >
                       {currentUser?.name?.split(' ')[0] || 'User'}
                     </span>
-                  </div>
-                  <Button
-                    variant="outline"
-                    size="md"
-                    className={cn(
-                      "backdrop-blur-xl transition-all duration-500",
-                      isScrolled
-                        ? "bg-gray-100/80 hover:bg-gray-200/80 text-gray-700 border-gray-300/50 hover:border-gray-400/70 shadow-[0_4px_16px_rgba(0,0,0,0.1)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.15)]"
-                        : "bg-white/10 hover:bg-white/20 text-white border-white/30 hover:border-white/50 shadow-[0_4px_16px_rgba(255,255,255,0.1)] hover:shadow-[0_8px_32px_rgba(255,255,255,0.2)]"
-                    )}
-                    onClick={() => window.location.href = '/dashboard'}
-                  >
-                    Dashboard
-                  </Button>
+                  </button>
+
+                  {/* Logout */}
                   <Button
                     variant="outline"
                     size="md"
@@ -247,7 +272,9 @@ export default function Navigation() {
                     <LogOut size={16} />
                     <span>Logout</span>
                   </Button>
+
                 </div>
+
               </>
             ) : (
               <>
@@ -325,7 +352,7 @@ export default function Navigation() {
                   <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 </Link>
               ))}
-              
+
               {/* Mobile Auth Buttons */}
               <div className="pt-4 space-y-3">
                 {isAuthenticated ? (
@@ -340,7 +367,7 @@ export default function Navigation() {
                         </div>
                       </div>
                     </div>
-                    
+
                     <Button
                       variant="outline"
                       className="w-full backdrop-blur-xl bg-white/10 hover:bg-white/20 text-white border-white/30 hover:border-white/50 shadow-[0_4px_16px_rgba(255,255,255,0.1)] hover:shadow-[0_8px_32px_rgba(255,255,255,0.2)] transition-all duration-500"

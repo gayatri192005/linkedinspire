@@ -87,7 +87,7 @@ export default function SignupPage() {
         // Show error message from API
         setApiError(result.message || 'Signup failed. Please try again.')
       }
-    } catch (error) {
+    } catch {
       setApiError('An unexpected error occurred. Please try again.')
     } finally {
       setIsLoading(false)

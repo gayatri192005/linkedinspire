@@ -21,22 +21,18 @@ export default function LoginForm() {
     const [showPassword, setShowPassword] = useState(false)
     const [errors, setErrors] = useState<Record<string, string>>({})
     const [apiError, setApiError] = useState<string>('')
-    const [successMessage, setSuccessMessage] = useState<string>('')
     const [isLoading, setIsLoading] = useState(false)
     const router = useRouter()
     const searchParams = useSearchParams()
+    const [successMessage, setSuccessMessage] = useState(() => searchParams.get('message') || '')
 
     useEffect(() => {
-        const message = searchParams.get('message')
-        if (message) {
-            setSuccessMessage(message)
-            // Clear message after 5 seconds
-            const timer = setTimeout(() => {
-                setSuccessMessage('')
-            }, 5000)
-            return () => clearTimeout(timer)
-        }
-    }, [searchParams])
+        if (!successMessage) return
+        const timer = setTimeout(() => {
+            setSuccessMessage('')
+        }, 5000)
+        return () => clearTimeout(timer)
+    }, [successMessage])
 
     const validateForm = () => {
         const newErrors: Record<string, string> = {}

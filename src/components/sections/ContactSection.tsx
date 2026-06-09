@@ -92,17 +92,17 @@ export default function ContactSection() {
               <h3 className="text-xl font-bold text-[#000000] mb-6">Quick Actions</h3>
               
               <div className="space-y-4">
-                <Button variant="primary" className="w-full flex items-center justify-center gap-2">
+                <Button variant="primary" className="w-full">
                   <MessageCircle className="w-5 h-5" />
-                  Join WhatsApp Community
+                  <span>Join WhatsApp Community</span>
                 </Button>
-                <Button variant="secondary" className="w-full flex items-center justify-center gap-2">
+                <Button variant="secondary" className="w-full">
                   <Phone className="w-5 h-5" />
-                  Subscribe to Channel
+                  <span>Subscribe to Channel</span>
                 </Button>
-                <Button variant="outline" className="w-full flex items-center justify-center gap-2">
+                <Button variant="outline" className="w-full">
                   <Mail className="w-5 h-5" />
-                  Send Email
+                  <span>Send Email</span>
                 </Button>
               </div>
             </div>

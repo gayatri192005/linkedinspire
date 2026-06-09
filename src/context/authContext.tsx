@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 
 type AuthContextType = {
   loggedIn: boolean
@@ -11,12 +11,10 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType | null>(null)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [loggedIn, setLoggedIn] = useState(false)
-
-  useEffect(() => {
-    const token = localStorage.getItem('token')
-    setLoggedIn(!!token)
-  }, [])
+  const [loggedIn, setLoggedIn] = useState(() => {
+    if (typeof window === 'undefined') return false
+    return !!localStorage.getItem('token')
+  })
 
   const login = (token: string) => {
     localStorage.setItem('token', token)

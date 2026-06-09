@@ -8,13 +8,7 @@ import { apiService } from '@/lib/api'
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-
-  useEffect(() => {
-    // Check authentication status
-    const isAuth = apiService.isAuthenticated()
-    setIsAuthenticated(isAuth)
-  }, [])
+  const [isAuthenticated, setIsAuthenticated] = useState(() => apiService.isAuthenticated())
 
   const handleLogout = async () => {
     try {

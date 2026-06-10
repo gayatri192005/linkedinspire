@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { Eye, EyeOff, Mail, Lock, User, ArrowLeft, Check } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import Button from '@/components/ui/Button'
-import { apiService, SignupData } from '@/lib/api'
+import { useAuth } from '@/context/authContext'
 
 export default function SignupPage() {
   const [formData, setFormData] = useState({
@@ -23,6 +23,7 @@ export default function SignupPage() {
   const [apiError, setApiError] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
+  const { signUp } = useAuth()
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {}
@@ -70,28 +71,15 @@ export default function SignupPage() {
 
     setIsLoading(true)
     setApiError('')
-    
-    try {
-      const signupData: SignupData = {
-        name: `${formData.firstName.trim()} ${formData.lastName.trim()}`,
-        email: formData.email.trim(),
-        password: formData.password
-      }
-      
-      const result = await apiService.signup(signupData)
-      
-      if (result.success) {
-        // Redirect to login page after successful registration
-        router.push('/login?message=Registration successful! Please login.')
-      } else {
-        // Show error message from API
-        setApiError(result.message || 'Signup failed. Please try again.')
-      }
-    } catch {
-      setApiError('An unexpected error occurred. Please try again.')
-    } finally {
-      setIsLoading(false)
+
+    const { error } = await signUp(formData.email.trim(), formData.password)
+
+    if (error) {
+      setApiError(error)
+    } else {
+      router.push('/home')
     }
+    setIsLoading(false)
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

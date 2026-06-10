@@ -6,7 +6,6 @@ import { usePathname } from 'next/navigation'
 import { Menu, X, User, LogOut } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import Button from '@/components/ui/Button'
-import { apiService, User as UserType } from '@/lib/api'
 import { useAuth } from '@/context/authContext'
 import { useRouter } from 'next/navigation'
 
@@ -24,53 +23,26 @@ export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('')
-  const [isAuthenticated, setIsAuthenticated] = useState(false)
-  const [currentUser, setCurrentUser] = useState<UserType | null>(null)
   const pathname = usePathname()
-  const { loggedIn, logout } = useAuth()
+  const { user, signOut } = useAuth()
   const router = useRouter()
 
-
-  // Enhanced scroll effect with threshold
-  // Enhanced scroll effect with threshold + Home auto-active
-useEffect(() => {
-  const handleScroll = () => {
-    const y = window.scrollY
-
-    // keep navbar style constant
-    setIsScrolled(false)
-
-    // only control active nav highlight
-    if (y < 120) {
-      setActiveSection('')
-    }
-  }
-
-  window.addEventListener('scroll', handleScroll, { passive: true })
-  return () => window.removeEventListener('scroll', handleScroll)
-}, [])
-
-
-  // Check authentication status
   useEffect(() => {
-    const checkAuth = () => {
-      const authenticated = apiService.isAuthenticated()
-      setIsAuthenticated(authenticated)
-      if (authenticated) {
-        setCurrentUser(apiService.getCurrentUser())
+    const handleScroll = () => {
+      const y = window.scrollY
+      setIsScrolled(y > 50)
+
+      if (y < 120) {
+        setActiveSection('')
       }
     }
 
-    checkAuth()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
-    // Listen for storage changes (for cross-tab sync)
-    const handleStorageChange = () => {
-      checkAuth()
-    }
 
-    window.addEventListener('storage', handleStorageChange)
-    return () => window.removeEventListener('storage', handleStorageChange)
-  }, [loggedIn])
+
 
   // Track active section with Intersection Observer
   useEffect(() => {
@@ -152,18 +124,10 @@ useEffect(() => {
     return pathname === href
   }
 
-  // Handle logout
   const handleLogout = async () => {
-    try {
-      await apiService.logout()
-    } catch (error) {
-      console.error('Logout error:', error)
-    } finally {
-      logout()        // updates AuthContext state
-      router.push('/') // client-side redirect
-    }
+    await signOut()
+    router.push('/')
   }
-  87
 
   return (
     <nav
@@ -233,14 +197,14 @@ useEffect(() => {
 
           {/* Auth Buttons - Desktop */}
           <div className="hidden lg:flex items-center space-x-3">
-            {loggedIn ? (
+            {user ? (
               <>
                 {/* User Menu */}
                 <div className="flex items-center space-x-3">
 
                   {/* User chip → Dashboard */}
                   <button
-                    onClick={() => router.push('/dashboard')}
+                    onClick={() => router.push('/home')}
                     className="flex items-center space-x-2 px-3 py-2 rounded-xl bg-white/10 backdrop-blur-xl border border-white/20 hover:bg-white/20 transition-all duration-300"
                   >
                     <User
@@ -253,7 +217,7 @@ useEffect(() => {
                         isScrolled ? "text-gray-700" : "text-white"
                       )}
                     >
-                      {currentUser?.name?.split(' ')[0] || 'User'}
+                      {user?.email?.split('@')[0] || 'User'}
                     </span>
                   </button>
 
@@ -355,15 +319,15 @@ useEffect(() => {
 
               {/* Mobile Auth Buttons */}
               <div className="pt-4 space-y-3">
-                {isAuthenticated ? (
+                {user ? (
                   <>
                     {/* User Info */}
                     <div className="px-4 py-3 rounded-xl bg-white/10 backdrop-blur-xl border border-white/20">
                       <div className="flex items-center space-x-3">
                         <User size={20} className="text-white" />
                         <div>
-                          <p className="text-white font-medium">{currentUser?.name || 'User'}</p>
-                          <p className="text-white/80 text-sm">{currentUser?.email}</p>
+                          <p className="text-white font-medium">{user?.email?.split('@')[0] || 'User'}</p>
+                          <p className="text-white/80 text-sm">{user?.email}</p>
                         </div>
                       </div>
                     </div>
@@ -373,7 +337,7 @@ useEffect(() => {
                       className="w-full backdrop-blur-xl bg-white/10 hover:bg-white/20 text-white border-white/30 hover:border-white/50 shadow-[0_4px_16px_rgba(255,255,255,0.1)] hover:shadow-[0_8px_32px_rgba(255,255,255,0.2)] transition-all duration-500"
                       onClick={() => {
                         setIsMobileMenuOpen(false)
-                        window.location.href = '/dashboard'
+                        window.location.href = '/home'
                       }}
                     >
                       Dashboard

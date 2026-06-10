@@ -132,7 +132,7 @@ export default function Navigation() {
   return (
     <nav
       className={cn(
-        'fixed top-0 w-full z-50 transition-all duration-500',
+        'fixed top-0 w-full z-50',
         isScrolled
           ? 'backdrop-blur-2xl bg-white/95 shadow-[0_8px_32px_rgba(0,0,0,0.15)] border-b border-gray-200/50'
           : 'backdrop-blur-xl bg-gradient-to-r from-gray-900/95 via-gray-800/95 to-gray-900/95 border-b border-white/10'

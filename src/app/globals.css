@@ -396,17 +396,6 @@ section {
   overflow-x: hidden;
 }
 
-/* Selection Color */
-::selection {
-  background-color: var(--linkedin-primary);
-  color: white;
-}
-
-::-moz-selection {
-  background-color: var(--linkedin-primary);
-  color: white;
-}
-
 /* Focus Visible Styles */
 *:focus-visible {
   outline: 2px solid var(--linkedin-primary);

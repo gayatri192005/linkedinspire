@@ -1,8 +1,9 @@
 import Link from 'next/link'
-import { siYoutube, siInstagram } from 'simple-icons'
 import { Phone, MessageCircle } from 'lucide-react'
 
 const linkedinPath = 'M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z'
+const youtubePath = 'M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z'
+const instagramPath = 'M7.0301.084c-1.2768.0602-2.1487.264-2.911.5634-.7888.3075-1.4575.72-2.1228 1.3877-.6652.6677-1.075 1.3568-1.253 2.3737-.1614.9143-.1834 1.9288-.1859 2.9271-.0026 1.1631-.0026 2.331-.0026 3.4988v.0026c0 1.1678 0 2.3357.0026 3.4988.0025.9983.0245 2.0128.1859 2.9271.178 1.0169.5874 1.706 1.253 2.3737.6652.6677 1.334 1.0803 2.1228 1.3877.7624.2994 1.6342.5032 2.911.5634 1.2768.0602 1.878.0745 3.4988.0745h.0035c1.6208 0 2.222-.0143 3.4988-.0745 1.2768-.0602 2.1486-.264 2.911-.5634.7888-.3074 1.4575-.72 2.1228-1.3877.6652-.6677 1.075-1.3568 1.253-2.3737.1614-.9143.1834-1.9288.1859-2.9271.0026-1.1631.0026-2.331.0026-3.4988v-.0026c0-1.1678 0-2.3357-.0026-3.4988-.0025-.9983-.0245-2.0128-.1859-2.9271-.178-1.0169-.5874-1.706-1.253-2.3737-.6652-.6677-1.334-1.0803-2.1228-1.3877-.7624-.2994-1.6342-.5032-2.911-.5634-1.2768-.0602-1.878-.0745-3.4988-.0745h-.0035c-1.6208 0-2.222.0143-3.4988.0745zM8.6023 5.7995l9.5017 5.445-9.5017 5.445V5.7995z'
 
 export default function Footer() {
   const footerLinks = {
@@ -60,7 +61,7 @@ export default function Footer() {
                 title="LinkedIn"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent pointer-events-none"></div>
-                <svg role="img" viewBox="0 0 24 24" width={20} height={20} fill="currentColor" className="relative z-10"><path d={linkedinPath} /></svg>
+                <svg role="img" viewBox="0 0 24 24" width={20} height={20} fill="currentColor" className="relative z-10" aria-label="LinkedIn"><path d={linkedinPath} /></svg>
               </a>
               <a
                 href="https://wa.me/+1234567890"
@@ -90,7 +91,7 @@ export default function Footer() {
                 title="YouTube Channel"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent pointer-events-none"></div>
-                <svg role="img" viewBox="0 0 24 24" width={20} height={20} fill="currentColor" className="relative z-10"><path d={siYoutube.path} /></svg>
+                <svg role="img" viewBox="0 0 24 24" width={20} height={20} fill="currentColor" className="relative z-10" aria-label="YouTube"><path d={youtubePath} /></svg>
               </a>
               <a
                 href="https://instagram.com/linkedinspire"
@@ -100,7 +101,7 @@ export default function Footer() {
                 title="Instagram Page"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent pointer-events-none"></div>
-                <svg role="img" viewBox="0 0 24 24" width={20} height={20} fill="currentColor" className="relative z-10"><path d={siInstagram.path} /></svg>
+                <svg role="img" viewBox="0 0 24 24" width={20} height={20} fill="currentColor" className="relative z-10" aria-label="Instagram"><path d={instagramPath} /></svg>
               </a>
             </div>
           </div>
@@ -204,7 +205,7 @@ export default function Footer() {
         <div className="border-t border-white/10 pt-8">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-[#DCE6F1] text-sm">
-              © Copyright 2025 LinkedINspire Community
+              © Copyright {new Date().getFullYear()} LinkedINspire Community
             </p>
             <div className="flex flex-wrap justify-center gap-6 text-sm">
               <Link href="/privacy" className="text-[#DCE6F1] hover:text-white transition-colors">

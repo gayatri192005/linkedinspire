@@ -106,7 +106,11 @@ export default function SpeakersSection() {
 
         {/* Speakers Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {speakers.map((speaker) => (
+          {speakers.length === 0 ? (
+            <div className="col-span-full text-center py-16">
+              <p className="text-xl text-[#56687A]">No speakers announced yet. Stay tuned!</p>
+            </div>
+          ) : speakers.map((speaker) => (
             <div key={speaker.id} className="bg-white rounded-2xl p-6 border border-[#E8E8E8] shadow-sm hover:shadow-lg hover:border-[#0A66C2]/30 transition-all duration-300 group">
               {/* Header with Avatar and LinkedIn */}
               <div className="flex items-start justify-between mb-4">

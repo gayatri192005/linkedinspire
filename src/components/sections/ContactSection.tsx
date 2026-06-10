@@ -1,9 +1,24 @@
 'use client'
 
+import { useState, type FormEvent } from 'react'
 import { Mail, Phone, MessageCircle, MapPin, Clock, Send } from 'lucide-react'
 import Button from '@/components/ui/Button'
 
 export default function ContactSection() {
+  const [formState, setFormState] = useState({ name: '', email: '', subject: '', linkedin: '', message: '' })
+  const [submitted, setSubmitted] = useState(false)
+
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault()
+    console.log('Contact form submitted:', formState)
+    setSubmitted(true)
+    setFormState({ name: '', email: '', subject: '', linkedin: '', message: '' })
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormState(prev => ({ ...prev, [e.target.name]: e.target.value }))
+  }
+
   return (
     <section id="contact" className="py-20 bg-gradient-to-br from-white via-[#F8FBFF] to-[#FDFAF5] relative overflow-hidden">
       {/* Decorative glossy orbs */}
@@ -112,7 +127,12 @@ export default function ContactSection() {
           <div className="backdrop-blur-xl bg-white/90 rounded-3xl p-8 border border-white/40 shadow-xl">
             <h3 className="text-2xl font-bold text-[#000000] mb-6">Send us a Message</h3>
             
-            <form className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {submitted && (
+                <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-xl text-sm">
+                  Thank you! We&apos;ll get back to you within 24 hours.
+                </div>
+              )}
               <div>
                 <label htmlFor="name" className="block text-sm font-medium text-[#000000] mb-2">
                   Full Name *
@@ -121,6 +141,8 @@ export default function ContactSection() {
                   type="text"
                   id="name"
                   name="name"
+                  value={formState.name}
+                  onChange={handleChange}
                   required
                   className="w-full px-4 py-3 rounded-xl border border-white/40 bg-white/80 backdrop-blur-sm focus:ring-2 focus:ring-[#0A66C2] focus:border-transparent transition-all duration-300"
                   placeholder="Enter your full name"
@@ -135,6 +157,8 @@ export default function ContactSection() {
                   type="email"
                   id="email"
                   name="email"
+                  value={formState.email}
+                  onChange={handleChange}
                   required
                   className="w-full px-4 py-3 rounded-xl border border-white/40 bg-white/80 backdrop-blur-sm focus:ring-2 focus:ring-[#0A66C2] focus:border-transparent transition-all duration-300"
                   placeholder="Enter your email address"
@@ -148,6 +172,8 @@ export default function ContactSection() {
                 <select
                   id="subject"
                   name="subject"
+                  value={formState.subject}
+                  onChange={handleChange}
                   className="w-full px-4 py-3 rounded-xl border border-white/40 bg-white/80 backdrop-blur-sm focus:ring-2 focus:ring-[#0A66C2] focus:border-transparent transition-all duration-300"
                 >
                   <option value="">Select a subject</option>
@@ -167,6 +193,8 @@ export default function ContactSection() {
                   type="url"
                   id="linkedin"
                   name="linkedin"
+                  value={formState.linkedin}
+                  onChange={handleChange}
                   className="w-full px-4 py-3 rounded-xl border border-white/40 bg-white/80 backdrop-blur-sm focus:ring-2 focus:ring-[#0A66C2] focus:border-transparent transition-all duration-300"
                   placeholder="https://linkedin.com/in/yourprofile"
                 />
@@ -180,6 +208,8 @@ export default function ContactSection() {
                   id="message"
                   name="message"
                   rows={5}
+                  value={formState.message}
+                  onChange={handleChange}
                   required
                   className="w-full px-4 py-3 rounded-xl border border-white/40 bg-white/80 backdrop-blur-sm focus:ring-2 focus:ring-[#0A66C2] focus:border-transparent transition-all duration-300 resize-none"
                   placeholder="Tell us how we can help you..."

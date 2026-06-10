@@ -74,10 +74,14 @@ export default function SessionsSection() {
 
         {/* Sessions Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
-          {sessions.map((session) => (
+          {sessions.length === 0 ? (
+            <div className="col-span-full text-center py-16">
+              <p className="text-xl text-[#56687A]">No sessions scheduled yet. Stay tuned!</p>
+            </div>
+          ) : sessions.map((session) => (
             <div key={session.id} className="backdrop-blur-xl bg-white/90 rounded-3xl overflow-hidden border border-white/40 shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 relative group">
               {/* Image Header */}
-              <div className="relative h-54 bg-gradient-to-br from-[#0A66C2] to-[#004182] overflow-hidden">
+              <div className="relative h-56 bg-gradient-to-br from-[#0A66C2] to-[#004182] overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-br from-[#0A66C2]/90 to-[#004182]/90"></div>
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center text-white">

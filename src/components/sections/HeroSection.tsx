@@ -2,8 +2,9 @@
 
 import { Play, Users, CheckCircle, MessageCircle, TrendingUp, Award } from 'lucide-react'
 import Button from '@/components/ui/Button'
-import { useState } from 'react'
-import Modal from '@/components/ui/Modal'
+import { useState, lazy, Suspense } from 'react'
+
+const Modal = lazy(() => import('@/components/ui/Modal'))
 
 export default function HeroSection() {
   const [showVideo, setShowVideo] = useState(false)
@@ -122,7 +123,8 @@ export default function HeroSection() {
 
       {/* Video Modal */}
       {showVideo && (
-        <Modal onClose={() => setShowVideo(false)}>
+        <Suspense fallback={<div className="w-full aspect-video bg-gray-200 rounded-xl animate-pulse" />}>
+          <Modal onClose={() => setShowVideo(false)}>
           <div className="aspect-video rounded-xl overflow-hidden">
             <iframe
               width="100%"
@@ -134,6 +136,7 @@ export default function HeroSection() {
             ></iframe>
           </div>
         </Modal>
+        </Suspense>
       )}
     </section>
   )

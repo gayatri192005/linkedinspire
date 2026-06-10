@@ -1,6 +1,6 @@
 'use client'
 
-import { BookOpen, Users, Trophy, MapPin, ArrowRight, CheckCircle, Sparkles } from 'lucide-react'
+import { BookOpen, Users, Trophy, MapPin, CheckCircle, Sparkles } from 'lucide-react'
 import Button from '@/components/ui/Button'
 
 export default function CampusConnectSection() {
@@ -158,8 +158,7 @@ export default function CampusConnectSection() {
           <h3 className="text-3xl rethink-sans-bold text-center mb-12">How to Apply</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {steps.map((step, index) => (
-              <div key={index} className="relative">
-                <div className="backdrop-blur-xl bg-white/90 rounded-2xl p-6 border border-white/40 shadow-lg hover:shadow-xl transition-all duration-300 h-full">
+              <div key={index} className="backdrop-blur-xl bg-white/90 rounded-2xl p-6 border border-white/40 shadow-lg hover:shadow-xl transition-all duration-300 h-full">
                   <div className="text-center">
                     <div className="w-12 h-12 bg-gradient-to-br from-[#0A66C2] to-[#004182] rounded-full flex items-center justify-center mx-auto mb-4 text-white rethink-sans-bold">
                       {step.step}
@@ -168,15 +167,9 @@ export default function CampusConnectSection() {
                     <p className="text-[#56687A] rethink-sans-regular text-sm leading-relaxed">{step.description}</p>
                   </div>
                 </div>
-                {index < steps.length - 1 && (
-                  <div className="hidden lg:block absolute top-1/2 -right-3 transform -translate-y-1/2">
-                    <ArrowRight className="w-6 h-6 text-[#0A66C2]" />
-                  </div>
-                )}
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
 
         {/* CTA Section */}
         <div className="text-center backdrop-blur-xl bg-gradient-to-r from-[#0A66C2]/95 via-[#0077B5]/95 to-[#004182]/95 rounded-3xl p-12 text-white shadow-2xl shadow-[#0A66C2]/40 border border-white/20">

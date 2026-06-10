@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { User, Mail, Calendar, Settings, LogOut, ArrowLeft } from 'lucide-react'
@@ -9,6 +10,12 @@ import { useAuth } from '@/context/authContext'
 export default function HomePage() {
   const { user, signOut, loading } = useAuth()
   const router = useRouter()
+
+  useEffect(() => {
+    if (!user && !loading) {
+      router.replace('/login')
+    }
+  }, [user, loading, router])
 
   if (loading) {
     return (
@@ -21,10 +28,7 @@ export default function HomePage() {
     )
   }
 
-  if (!user) {
-    router.push('/login')
-    return null
-  }
+  if (!user) return null
 
   const handleLogout = async () => {
     await signOut()

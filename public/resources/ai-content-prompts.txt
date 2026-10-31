@@ -1,0 +1,17 @@
+AI-ASSISTED CONTENT PROMPTS
+
+Use AI to brainstorm or edit, not to invent personal experience. Replace bracketed notes with your own verified details.
+
+1. Help me outline a short LinkedIn post about [real experience]. Ask me questions before drafting and do not add facts I have not provided.
+2. Suggest five clear opening lines for a post about [topic]. Keep each accurate, specific, and free of exaggerated claims.
+3. Review this draft for clarity and tone. Preserve my meaning and flag any statements that need evidence: [paste draft].
+4. Turn these notes into a simple outline with a beginning, one main idea, and a useful close. Do not invent examples: [paste notes].
+5. Suggest questions a reader might have after reading this post about [topic].
+6. Help me shorten this paragraph while keeping my own voice and all factual details unchanged: [paste paragraph].
+7. Identify jargon in this text and suggest plain-language alternatives: [paste text].
+
+Review before using any AI-assisted output:
+- Verify every fact, statistic, name, and link.
+- Remove claims that you cannot support.
+- Check privacy, copyright, and permission before sharing.
+- Edit the result so it sounds like you.

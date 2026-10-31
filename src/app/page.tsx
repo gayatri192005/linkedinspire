@@ -3,6 +3,7 @@ import HeroSection from '@/components/sections/HeroSection'
 import ImpactSection from '@/components/sections/ImpactSection'
 import AboutSection from '@/components/sections/AboutSection'
 import GrowthSection from '@/components/sections/GrowthSection'
+import FeatureShowcaseSection from '@/components/sections/FeatureShowcaseSection'
 import ProgramsSection from '@/components/sections/ProgramsSection'
 import SessionsSection from '@/components/sections/SessionsSection'
 import SpeakersSection from '@/components/sections/SpeakersSection'
@@ -27,6 +28,7 @@ export default function HomePage() {
       <ImpactSection />
       <AboutSection />
       <GrowthSection />
+      <FeatureShowcaseSection />
       <ProgramsSection />
       <SessionsSection />
       <SpeakersSection />

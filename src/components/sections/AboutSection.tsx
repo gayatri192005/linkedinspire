@@ -4,11 +4,11 @@ export default function AboutSection() {
   return (
     <section id="about" className="py-20 bg-gradient-to-br from-white via-[#F8FBFF] to-[#FDFAF5] relative overflow-hidden">
       {/* Decorative glossy orbs */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-[#0A66C2]/10 to-transparent rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-[#DCE6F1]/30 to-transparent rounded-full blur-3xl"></div>
+      <div className="ambient-orb ambient-orb--slow absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-[#0A66C2]/10 to-transparent rounded-full blur-3xl"></div>
+      <div className="ambient-orb ambient-orb--reverse absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-[#DCE6F1]/30 to-transparent rounded-full blur-3xl"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-16">
+        <div data-reveal className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl rethink-sans-bold text-[#000000] mb-6">
             What is LinkedINspire?
           </h2>
@@ -21,9 +21,9 @@ export default function AboutSection() {
         </div>
 
         {/* Who are we? & What makes us different? */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+        <div data-reveal-group className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
           {/* Who are we? */}
-          <div className="backdrop-blur-xl bg-gradient-to-br from-white/90 via-white/80 to-[#F8FBFF]/70 rounded-3xl p-8 border border-white/40 shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 relative overflow-hidden group">
+          <div className="motion-card backdrop-blur-xl bg-gradient-to-br from-white/90 via-white/80 to-[#F8FBFF]/70 rounded-3xl p-8 border border-white/40 shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 relative overflow-hidden group">
             <div className="absolute inset-0 bg-gradient-to-br from-white/60 via-transparent to-transparent pointer-events-none"></div>
             
             <div className="relative z-10">
@@ -39,7 +39,7 @@ export default function AboutSection() {
           </div>
 
           {/* What makes us different? */}
-          <div className="backdrop-blur-xl bg-gradient-to-br from-[#0A66C2]/10 via-white/80 to-[#DCE6F1]/70 rounded-3xl p-8 border border-white/40 shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 relative overflow-hidden group">
+          <div className="motion-card backdrop-blur-xl bg-gradient-to-br from-[#0A66C2]/10 via-white/80 to-[#DCE6F1]/70 rounded-3xl p-8 border border-white/40 shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 relative overflow-hidden group">
             <div className="absolute inset-0 bg-gradient-to-br from-white/60 via-transparent to-transparent pointer-events-none"></div>
             
             <div className="relative z-10">
@@ -56,8 +56,8 @@ export default function AboutSection() {
         </div>
 
         {/* Value Propositions with Glossy Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-          <div className="text-center p-8 backdrop-blur-xl bg-gradient-to-br from-amber-50/80 via-white/70 to-orange-50/60 rounded-3xl border border-white/40 shadow-xl hover:shadow-2xl hover:shadow-amber-500/20 hover:-translate-y-2 transition-all duration-500 relative overflow-hidden group">
+        <div data-reveal-group className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+          <div className="motion-card text-center p-8 backdrop-blur-xl bg-gradient-to-br from-amber-50/80 via-white/70 to-orange-50/60 rounded-3xl border border-white/40 shadow-xl hover:shadow-2xl hover:shadow-amber-500/20 hover:-translate-y-2 transition-all duration-500 relative overflow-hidden group">
             {/* Glossy overlay */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/50 via-transparent to-transparent pointer-events-none"></div>
             
@@ -72,7 +72,7 @@ export default function AboutSection() {
             </div>
           </div>
 
-          <div className="text-center p-8 backdrop-blur-xl bg-gradient-to-br from-sky-50/80 via-white/70 to-cyan-50/60 rounded-3xl border border-white/40 shadow-xl hover:shadow-2xl hover:shadow-[#0A66C2]/20 hover:-translate-y-2 transition-all duration-500 relative overflow-hidden group">
+          <div className="motion-card text-center p-8 backdrop-blur-xl bg-gradient-to-br from-sky-50/80 via-white/70 to-cyan-50/60 rounded-3xl border border-white/40 shadow-xl hover:shadow-2xl hover:shadow-[#0A66C2]/20 hover:-translate-y-2 transition-all duration-500 relative overflow-hidden group">
             <div className="absolute inset-0 bg-gradient-to-br from-white/50 via-transparent to-transparent pointer-events-none"></div>
             
             <div className="relative z-10">
@@ -86,7 +86,7 @@ export default function AboutSection() {
             </div>
           </div>
 
-          <div className="text-center p-8 backdrop-blur-xl bg-gradient-to-br from-rose-50/80 via-white/70 to-pink-50/60 rounded-3xl border border-white/40 shadow-xl hover:shadow-2xl hover:shadow-rose-500/20 hover:-translate-y-2 transition-all duration-500 relative overflow-hidden group">
+          <div className="motion-card text-center p-8 backdrop-blur-xl bg-gradient-to-br from-rose-50/80 via-white/70 to-pink-50/60 rounded-3xl border border-white/40 shadow-xl hover:shadow-2xl hover:shadow-rose-500/20 hover:-translate-y-2 transition-all duration-500 relative overflow-hidden group">
             <div className="absolute inset-0 bg-gradient-to-br from-white/50 via-transparent to-transparent pointer-events-none"></div>
             
             <div className="relative z-10">
@@ -102,7 +102,7 @@ export default function AboutSection() {
         </div>
 
         {/* Mission Statement with Glossy Effect */}
-        <div className="relative backdrop-blur-2xl bg-gradient-to-r from-[#0A66C2]/95 via-[#0077B5]/95 to-[#004182]/95 rounded-3xl p-12 text-white overflow-hidden shadow-2xl shadow-[#0A66C2]/40 border border-white/20">
+        <div data-reveal className="motion-card relative backdrop-blur-2xl bg-gradient-to-r from-[#0A66C2]/95 via-[#0077B5]/95 to-[#004182]/95 rounded-3xl p-12 text-white overflow-hidden shadow-2xl shadow-[#0A66C2]/40 border border-white/20">
           {/* Animated glow */}
           <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent pointer-events-none"></div>
           

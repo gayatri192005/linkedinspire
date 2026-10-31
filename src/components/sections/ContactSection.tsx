@@ -3,6 +3,7 @@
 import { useState, type FormEvent } from 'react'
 import { Mail, Phone, MessageCircle, MapPin, Clock, Send } from 'lucide-react'
 import Button from '@/components/ui/Button'
+import AnimatedCounter from '@/components/ui/AnimatedCounter'
 
 export default function ContactSection() {
   const [formState, setFormState] = useState({ name: '', email: '', subject: '', linkedin: '', message: '' })
@@ -10,7 +11,6 @@ export default function ContactSection() {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
-    console.log('Contact form submitted:', formState)
     setSubmitted(true)
     setFormState({ name: '', email: '', subject: '', linkedin: '', message: '' })
   }
@@ -22,11 +22,11 @@ export default function ContactSection() {
   return (
     <section id="contact" className="py-20 bg-gradient-to-br from-white via-[#F8FBFF] to-[#FDFAF5] relative overflow-hidden">
       {/* Decorative glossy orbs */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-[#0A66C2]/10 to-transparent rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-[#DCE6F1]/30 to-transparent rounded-full blur-3xl"></div>
+      <div className="ambient-orb ambient-orb--slow absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-[#0A66C2]/10 to-transparent rounded-full blur-3xl"></div>
+      <div className="ambient-orb ambient-orb--reverse absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-[#DCE6F1]/30 to-transparent rounded-full blur-3xl"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-16">
+        <div data-reveal className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-[#000000] mb-6">
             Get in Touch
           </h2>
@@ -36,10 +36,10 @@ export default function ContactSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+        <div data-reveal-group className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
           {/* Contact Information */}
-          <div className="space-y-8">
-            <div className="backdrop-blur-xl bg-white/90 rounded-3xl p-8 border border-white/40 shadow-xl">
+          <div data-reveal-group className="space-y-8">
+            <div className="motion-card backdrop-blur-xl bg-white/90 rounded-3xl p-8 border border-white/40 shadow-xl">
               <h3 className="text-2xl font-bold text-[#000000] mb-6">Contact Information</h3>
               
               <div className="space-y-6">
@@ -103,7 +103,7 @@ export default function ContactSection() {
             </div>
 
             {/* Quick Actions */}
-            <div className="backdrop-blur-xl bg-white/90 rounded-3xl p-8 border border-white/40 shadow-xl">
+            <div className="motion-card backdrop-blur-xl bg-white/90 rounded-3xl p-8 border border-white/40 shadow-xl">
               <h3 className="text-xl font-bold text-[#000000] mb-6">Quick Actions</h3>
               
               <div className="space-y-4">
@@ -124,7 +124,7 @@ export default function ContactSection() {
           </div>
 
           {/* Contact Form */}
-          <div className="backdrop-blur-xl bg-white/90 rounded-3xl p-8 border border-white/40 shadow-xl">
+          <div className="motion-card backdrop-blur-xl bg-white/90 rounded-3xl p-8 border border-white/40 shadow-xl">
             <h3 className="text-2xl font-bold text-[#000000] mb-6">Send us a Message</h3>
             
             <form onSubmit={handleSubmit} className="space-y-6">
@@ -225,7 +225,7 @@ export default function ContactSection() {
         </div>
 
         {/* Community Stats */}
-        <div className="backdrop-blur-2xl bg-gradient-to-r from-[#0A66C2]/95 via-[#0077B5]/95 to-[#004182]/95 rounded-3xl p-12 text-white overflow-hidden shadow-2xl shadow-[#0A66C2]/40 border border-white/20">
+        <div data-reveal className="motion-card relative backdrop-blur-2xl bg-gradient-to-r from-[#0A66C2]/95 via-[#0077B5]/95 to-[#004182]/95 rounded-3xl p-12 text-white overflow-hidden shadow-2xl shadow-[#0A66C2]/40 border border-white/20">
           {/* Animated glow */}
           <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent pointer-events-none"></div>
           
@@ -235,21 +235,21 @@ export default function ContactSection() {
           
           <div className="relative z-10 text-center">
             <h3 className="text-3xl font-bold mb-8">Join Our Growing Community</h3>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-              <div>
-                <div className="text-4xl font-bold mb-2">XXXX+</div>
+            <div data-reveal-group className="grid grid-cols-1 md:grid-cols-4 gap-8">
+              <div className="text-center">
+                <AnimatedCounter value={1000} suffix="+" className="text-4xl font-bold mb-2" />
                 <p className="text-white/90">Community Members</p>
               </div>
-              <div>
-                <div className="text-4xl font-bold mb-2">50+</div>
+              <div className="text-center">
+                <AnimatedCounter value={50} suffix="+" className="text-4xl font-bold mb-2" />
                 <p className="text-white/90">Success Stories</p>
               </div>
-              <div>
-                <div className="text-4xl font-bold mb-2">10+</div>
+              <div className="text-center">
+                <AnimatedCounter value={10} suffix="+" className="text-4xl font-bold mb-2" />
                 <p className="text-white/90">Expert Sessions</p>
               </div>
-              <div>
-                <div className="text-4xl font-bold mb-2">24/7</div>
+              <div className="text-center">
+                <AnimatedCounter value={24} suffix="/7" className="text-4xl font-bold mb-2" />
                 <p className="text-white/90">Community Support</p>
               </div>
             </div>

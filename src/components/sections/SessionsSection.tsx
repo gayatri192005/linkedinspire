@@ -41,28 +41,16 @@ export default function SessionsSection() {
       status: 'completed',
       highlights: ['Career Branding', 'Startup Ecosystem', 'Industry Leadership']
     },
-    {
-      id: 4,
-      title: 'LinkedIN Foundation Series ft. Gayatri G & Mythrisri',
-      date: 'September 15, 2025',
-      speaker: 'Gayatri G & Mythrisri Kurra',
-      speakerDescription: 'Co-founders of LinkedINspire, passionate community leaders focused on empowering students and professionals in their LinkedIn journey.',
-      type: 'Completed Session',
-      attendees: 400,
-      duration: '120 min',
-      status: 'completed',
-      highlights: ['LinkedIn Basics', 'Profile Optimization', 'Personal Branding', 'AI Tools']
-    }
-  ]
+    ]
 
   return (
     <section id="sessions" className="py-20 bg-gradient-to-br from-white via-[#F8FBFF] to-[#FDFAF5] relative overflow-hidden">
       {/* Decorative glossy orbs */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-[#0A66C2]/10 to-transparent rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-[#DCE6F1]/30 to-transparent rounded-full blur-3xl"></div>
+      <div className="ambient-orb ambient-orb--slow absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-[#0A66C2]/10 to-transparent rounded-full blur-3xl"></div>
+      <div className="ambient-orb ambient-orb--reverse absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-[#DCE6F1]/30 to-transparent rounded-full blur-3xl"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="text-center mb-16">
+        <div data-reveal className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl rethink-sans-bold text-[#000000] mb-6">
             Our Sessions
           </h2>
@@ -73,16 +61,16 @@ export default function SessionsSection() {
         </div>
 
         {/* Sessions Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+        <div data-reveal-group className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
           {sessions.length === 0 ? (
             <div className="col-span-full text-center py-16">
               <p className="text-xl text-[#56687A]">No sessions scheduled yet. Stay tuned!</p>
             </div>
           ) : sessions.map((session) => (
-            <div key={session.id} className="backdrop-blur-xl bg-white/90 rounded-3xl overflow-hidden border border-white/40 shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 relative group">
+            <div key={session.id} className="motion-card backdrop-blur-xl bg-white/90 rounded-3xl overflow-hidden border border-white/40 shadow-xl hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 relative group">
               {/* Image Header */}
-              <div className="relative h-56 bg-gradient-to-br from-[#0A66C2] to-[#004182] overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#0A66C2]/90 to-[#004182]/90"></div>
+              <div className="motion-media relative h-56 bg-gradient-to-br from-[#0A66C2] to-[#004182] overflow-hidden">
+                <div className="motion-image absolute inset-0 bg-gradient-to-br from-[#0A66C2]/90 to-[#004182]/90"></div>
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center text-white">
                     <h4 className="text-lg rethink-sans-bold mb-2">LinkedINspire</h4>

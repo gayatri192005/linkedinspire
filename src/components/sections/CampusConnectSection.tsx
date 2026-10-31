@@ -53,12 +53,12 @@ export default function CampusConnectSection() {
   return (
     <section id="campus-connect" className="py-20 bg-gradient-to-br from-[#F8FBFF] via-white to-[#FDFAF5] relative overflow-hidden">
       {/* Decorative elements */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-[#0A66C2]/10 to-transparent rounded-full blur-3xl"></div>
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-[#DCE6F1]/30 to-transparent rounded-full blur-3xl"></div>
+      <div className="ambient-orb ambient-orb--slow absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-[#0A66C2]/10 to-transparent rounded-full blur-3xl"></div>
+      <div className="ambient-orb ambient-orb--reverse absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-[#DCE6F1]/30 to-transparent rounded-full blur-3xl"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div data-reveal className="text-center mb-16">
           <div className="inline-block mb-6">
             <span className="px-6 py-3 bg-gradient-to-r from-[#0A66C2] to-[#0077B5] text-white rounded-full text-sm rethink-sans-bold shadow-lg">
               🎓 Campus Connect Program
@@ -75,8 +75,8 @@ export default function CampusConnectSection() {
         </div>
 
         {/* What is Campus Connect */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
-          <div className="backdrop-blur-xl bg-white/90 rounded-3xl p-8 border border-white/40 shadow-xl hover:shadow-2xl transition-all duration-500">
+        <div data-reveal-group className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+          <div className="motion-card relative backdrop-blur-xl bg-white/90 rounded-3xl p-8 border border-white/40 shadow-xl hover:shadow-2xl transition-all duration-500">
             <div className="absolute inset-0 bg-gradient-to-br from-white/60 via-transparent to-transparent pointer-events-none rounded-3xl"></div>
             
             <div className="relative z-10">
@@ -106,7 +106,7 @@ export default function CampusConnectSection() {
             </div>
           </div>
 
-          <div className="backdrop-blur-xl bg-gradient-to-br from-[#0A66C2]/10 via-white/80 to-[#DCE6F1]/70 rounded-3xl p-8 border border-white/40 shadow-xl hover:shadow-2xl transition-all duration-500">
+          <div className="motion-card relative backdrop-blur-xl bg-gradient-to-br from-[#0A66C2]/10 via-white/80 to-[#DCE6F1]/70 rounded-3xl p-8 border border-white/40 shadow-xl hover:shadow-2xl transition-all duration-500">
             <div className="absolute inset-0 bg-gradient-to-br from-white/60 via-transparent to-transparent pointer-events-none rounded-3xl"></div>
             
             <div className="relative z-10">
@@ -139,10 +139,10 @@ export default function CampusConnectSection() {
 
         {/* Benefits Grid */}
         <div className="mb-16">
-          <h3 className="text-3xl rethink-sans-bold text-center mb-12">Why Join Campus Connect?</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <h3 data-reveal className="text-3xl rethink-sans-bold text-center mb-12">Why Join Campus Connect?</h3>
+          <div data-reveal-group className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {benefits.map((benefit, index) => (
-              <div key={index} className="text-center p-6 backdrop-blur-xl bg-white/70 rounded-2xl border border-white/40 shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
+              <div key={index} className="motion-card text-center p-6 backdrop-blur-xl bg-white/70 rounded-2xl border border-white/40 shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-300">
                 <div className="w-16 h-16 bg-gradient-to-br from-[#0A66C2] to-[#004182] rounded-xl flex items-center justify-center mx-auto mb-4 text-white">
                   {benefit.icon}
                 </div>
@@ -155,10 +155,10 @@ export default function CampusConnectSection() {
 
         {/* How to Apply Process */}
         <div className="mb-16">
-          <h3 className="text-3xl rethink-sans-bold text-center mb-12">How to Apply</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <h3 data-reveal className="text-3xl rethink-sans-bold text-center mb-12">How to Apply</h3>
+          <div data-reveal-group className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {steps.map((step, index) => (
-              <div key={index} className="backdrop-blur-xl bg-white/90 rounded-2xl p-6 border border-white/40 shadow-lg hover:shadow-xl transition-all duration-300 h-full">
+              <div key={index} className="motion-card backdrop-blur-xl bg-white/90 rounded-2xl p-6 border border-white/40 shadow-lg hover:shadow-xl transition-all duration-300 h-full">
                   <div className="text-center">
                     <div className="w-12 h-12 bg-gradient-to-br from-[#0A66C2] to-[#004182] rounded-full flex items-center justify-center mx-auto mb-4 text-white rethink-sans-bold">
                       {step.step}
@@ -172,7 +172,7 @@ export default function CampusConnectSection() {
           </div>
 
         {/* CTA Section */}
-        <div className="text-center backdrop-blur-xl bg-gradient-to-r from-[#0A66C2]/95 via-[#0077B5]/95 to-[#004182]/95 rounded-3xl p-12 text-white shadow-2xl shadow-[#0A66C2]/40 border border-white/20">
+        <div data-reveal className="motion-card relative text-center backdrop-blur-xl bg-gradient-to-r from-[#0A66C2]/95 via-[#0077B5]/95 to-[#004182]/95 rounded-3xl p-12 text-white shadow-2xl shadow-[#0A66C2]/40 border border-white/20">
           <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent pointer-events-none rounded-3xl"></div>
           
           <div className="relative z-10">

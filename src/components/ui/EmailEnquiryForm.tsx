@@ -65,12 +65,12 @@ export default function EmailEnquiryForm({
       <form onSubmit={handleSubmit} className="mt-6 space-y-5">
         {fields.map((field) => (
           <div key={field.name}>
-            <label htmlFor={field.name} className="mb-2 block text-sm font-semibold text-[#243b53]">
+            <label htmlFor={`${headingId}-${field.name}`} className="mb-2 block text-sm font-semibold text-[#243b53]">
               {field.label}{field.required ? <span aria-hidden="true"> *</span> : null}
             </label>
             {field.type === 'textarea' ? (
               <textarea
-                id={field.name}
+                id={`${headingId}-${field.name}`}
                 name={field.name}
                 rows={field.rows ?? 5}
                 required={field.required}
@@ -82,7 +82,7 @@ export default function EmailEnquiryForm({
               />
             ) : field.type === 'select' ? (
               <select
-                id={field.name}
+                id={`${headingId}-${field.name}`}
                 name={field.name}
                 required={field.required}
                 defaultValue={initialValues[field.name] ?? ''}
@@ -95,7 +95,7 @@ export default function EmailEnquiryForm({
               </select>
             ) : (
               <input
-                id={field.name}
+                id={`${headingId}-${field.name}`}
                 name={field.name}
                 type={field.type}
                 required={field.required}

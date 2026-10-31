@@ -72,19 +72,6 @@ export default function SpeakersSection() {
       sessionDate: 'September 15, 2025',
       featured: false
     },
-    {
-      id: 6,
-      name: 'Mythrisri Kurra',
-      title: 'Co-Founder LinkedINspire',
-      company: 'LinkedIn Optimization Expert',
-      followers: '20K+',
-      expertise: ['Profile Optimization', 'Content Creation', 'LinkedIn Algorithm'],
-      description: 'Co-founder of LinkedINspire and LinkedIn optimization expert. Specializes in profile optimization, content creation strategies, and understanding the LinkedIn algorithm.',
-      image: '/images/speakers/mythrisri.jpg',
-      linkedin: 'https://www.linkedin.com/in/mythrisri-kurra/',
-      sessionDate: 'September 15, 2025',
-      featured: false
-    }
   ]
 
   return (

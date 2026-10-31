@@ -3,7 +3,6 @@ import { Rethink_Sans } from 'next/font/google'
 import './globals.css'
 import Navigation from '@/components/layout/Navigation'
 import Footer from '@/components/layout/Footer'
-import MotionEffects from '@/components/ui/MotionEffects'
 import ErrorBoundary from '@/components/ui/ErrorBoundary'
 import { AuthProvider } from '@/context/authContext'
 
@@ -12,7 +11,6 @@ const rethinkSans = Rethink_Sans({
   weight: ['400', '500', '600', '700', '800'],
   style: ['normal', 'italic'],
   display: 'swap',
-  variable: '--font-rethink-sans',
 })
 
 export const metadata: Metadata = {
@@ -62,12 +60,11 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={`${rethinkSans.variable} overflow-x-hidden`}>
+      <body className={`${rethinkSans.className} overflow-x-hidden`}>
         <ErrorBoundary>
           <AuthProvider>
-            <MotionEffects />
             <Navigation />
-            <main className="relative z-10 min-h-screen">{children}</main>
+            <main className="min-h-screen">{children}</main>
             <Footer />
           </AuthProvider>
         </ErrorBoundary>

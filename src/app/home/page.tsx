@@ -53,7 +53,7 @@ export default function HomePage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div data-reveal className="motion-card bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl border border-white/50 p-8 mb-8">
+        <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl border border-white/50 p-8 mb-8">
           <div className="flex items-center space-x-4 mb-6">
             <div className="w-20 h-20 bg-gradient-to-br from-[#0A66C2] to-[#0077B5] rounded-2xl flex items-center justify-center">
               <User className="w-10 h-10 text-white" />
@@ -67,7 +67,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          <div data-reveal-group className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-blue-50 rounded-xl p-6 border border-blue-100">
               <div className="flex items-center justify-between mb-2">
                 <h3 className="font-semibold text-blue-900">Account Status</h3>
@@ -92,8 +92,8 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div data-reveal-group className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div className="motion-card bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl border border-white/50 p-6 hover:shadow-2xl transition-shadow duration-300">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl border border-white/50 p-6 hover:shadow-2xl transition-shadow duration-300">
             <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-4">
               <User className="w-6 h-6 text-white" />
             </div>
@@ -101,7 +101,7 @@ export default function HomePage() {
             <p className="text-gray-600 text-sm mb-4">Update your personal information and preferences</p>
             <Button variant="outline" size="sm" className="w-full">Manage Profile</Button>
           </div>
-          <div className="motion-card bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl border border-white/50 p-6 hover:shadow-2xl transition-shadow duration-300">
+          <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl border border-white/50 p-6 hover:shadow-2xl transition-shadow duration-300">
             <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-green-600 rounded-xl flex items-center justify-center mb-4">
               <Calendar className="w-6 h-6 text-white" />
             </div>
@@ -109,7 +109,7 @@ export default function HomePage() {
             <p className="text-gray-600 text-sm mb-4">View and manage your upcoming sessions</p>
             <Button variant="outline" size="sm" className="w-full">View Sessions</Button>
           </div>
-          <div className="motion-card bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl border border-white/50 p-6 hover:shadow-2xl transition-shadow duration-300">
+          <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-xl border border-white/50 p-6 hover:shadow-2xl transition-shadow duration-300">
             <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center mb-4">
               <Settings className="w-6 h-6 text-white" />
             </div>

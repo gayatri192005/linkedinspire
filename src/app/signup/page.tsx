@@ -117,7 +117,7 @@ export default function SignupPage() {
         </Link>
 
         {/* Signup Card */}
-        <div data-reveal className="motion-card bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl shadow-[#0A66C2]/10 border border-white/50 p-8">
+        <div className="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl shadow-[#0A66C2]/10 border border-white/50 p-8">
           {/* Header */}
           <div className="text-center mb-8">
             <div className="w-16 h-16 bg-gradient-to-br from-[#0A66C2] to-[#0077B5] rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">

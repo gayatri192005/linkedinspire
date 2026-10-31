@@ -14,7 +14,7 @@ export default function Button({
   children,
   ...props
 }: ButtonProps) {
-  const baseStyles = 'font-semibold rounded-full transition-all duration-300 ease-out inline-flex items-center justify-center backdrop-blur-xl relative overflow-hidden group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0A66C2] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60 motion-reduce:transition-none'
+  const baseStyles = 'font-semibold rounded-full transition-all duration-300 inline-flex items-center justify-center backdrop-blur-xl relative overflow-hidden group'
   
   const variants = {
     primary: `

@@ -72,16 +72,29 @@ export default function SpeakersSection() {
       sessionDate: 'September 15, 2025',
       featured: false
     },
-    ]
+    {
+      id: 6,
+      name: 'Mythrisri Kurra',
+      title: 'Co-Founder LinkedINspire',
+      company: 'LinkedIn Optimization Expert',
+      followers: '20K+',
+      expertise: ['Profile Optimization', 'Content Creation', 'LinkedIn Algorithm'],
+      description: 'Co-founder of LinkedINspire and LinkedIn optimization expert. Specializes in profile optimization, content creation strategies, and understanding the LinkedIn algorithm.',
+      image: '/images/speakers/mythrisri.jpg',
+      linkedin: 'https://www.linkedin.com/in/mythrisri-kurra/',
+      sessionDate: 'September 15, 2025',
+      featured: false
+    }
+  ]
 
   return (
     <section id="speakers" className="py-20 bg-gradient-to-br from-white via-[#F8FBFF] to-[#FDFAF5] relative overflow-hidden">
       {/* Decorative glossy orbs */}
-      <div className="ambient-orb ambient-orb--slow absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-[#0A66C2]/10 to-transparent rounded-full blur-3xl"></div>
-      <div className="ambient-orb ambient-orb--reverse absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-[#DCE6F1]/30 to-transparent rounded-full blur-3xl"></div>
+      <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-[#0A66C2]/10 to-transparent rounded-full blur-3xl"></div>
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-[#DCE6F1]/30 to-transparent rounded-full blur-3xl"></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div data-reveal className="text-center mb-16">
+        <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl rethink-sans-bold text-[#000000] mb-6">
             Meet Our Speakers
           </h2>
@@ -92,16 +105,16 @@ export default function SpeakersSection() {
         </div>
 
         {/* Speakers Grid */}
-        <div data-reveal-group className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {speakers.length === 0 ? (
             <div className="col-span-full text-center py-16">
               <p className="text-xl text-[#56687A]">No speakers announced yet. Stay tuned!</p>
             </div>
           ) : speakers.map((speaker) => (
-            <div key={speaker.id} className="motion-card bg-white rounded-2xl p-6 border border-[#E8E8E8] shadow-sm hover:shadow-lg hover:border-[#0A66C2]/30 transition-all duration-300 group">
+            <div key={speaker.id} className="bg-white rounded-2xl p-6 border border-[#E8E8E8] shadow-sm hover:shadow-lg hover:border-[#0A66C2]/30 transition-all duration-300 group">
               {/* Header with Avatar and LinkedIn */}
               <div className="flex items-start justify-between mb-4">
-                <div className="motion-image w-16 h-16 bg-gradient-to-br from-[#0A66C2] to-[#004182] rounded-xl flex items-center justify-center text-white rethink-sans-bold text-lg shadow-sm">
+                <div className="w-16 h-16 bg-gradient-to-br from-[#0A66C2] to-[#004182] rounded-xl flex items-center justify-center text-white rethink-sans-bold text-lg shadow-sm">
                   {speaker.name.split(' ').map(n => n[0]).join('')}
                 </div>
                 <a 
@@ -167,7 +180,7 @@ export default function SpeakersSection() {
         </div>
 
         {/* Become a Speaker CTA */}
-        <div data-reveal className="motion-card relative backdrop-blur-2xl bg-gradient-to-r from-[#0A66C2]/95 via-[#0077B5]/95 to-[#004182]/95 rounded-3xl p-12 text-white overflow-hidden shadow-2xl shadow-[#0A66C2]/40 border border-white/20">
+        <div className="backdrop-blur-2xl bg-gradient-to-r from-[#0A66C2]/95 via-[#0077B5]/95 to-[#004182]/95 rounded-3xl p-12 text-white overflow-hidden shadow-2xl shadow-[#0A66C2]/40 border border-white/20">
           {/* Animated glow */}
           <div className="absolute inset-0 bg-gradient-to-br from-white/20 via-transparent to-transparent pointer-events-none"></div>
           

@@ -41,27 +41,8 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  useEffect(() => {
-    if (!isMobileMenuOpen) return
 
-    const previousOverflow = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
 
-    return () => {
-      document.body.style.overflow = previousOverflow
-    }
-  }, [isMobileMenuOpen])
-
-  useEffect(() => {
-    if (!isMobileMenuOpen) return
-
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') setIsMobileMenuOpen(false)
-    }
-
-    document.addEventListener('keydown', handleEscape)
-    return () => document.removeEventListener('keydown', handleEscape)
-  }, [isMobileMenuOpen])
 
   // Track active section with Intersection Observer
   useEffect(() => {
@@ -116,7 +97,7 @@ export default function Navigation() {
     const targetElement = document.getElementById(targetId)
 
     if (targetElement) {
-      const headerOffset = window.matchMedia('(max-width: 767px)').matches ? 72 : 88
+      const headerOffset = 80
       const elementPosition = targetElement.getBoundingClientRect().top
       const offsetPosition = elementPosition + window.pageYOffset - headerOffset
 
@@ -150,7 +131,6 @@ export default function Navigation() {
 
   return (
     <nav
-      aria-label="Main navigation"
       className={cn(
         'fixed top-0 w-full z-50',
         isScrolled
@@ -196,7 +176,7 @@ export default function Navigation() {
                 href={item.href}
                 onClick={(e) => handleSmoothScroll(e, item.href)}
                 className={cn(
-                  'px-4 py-2 rounded-xl text-sm rethink-sans-medium transition-all duration-500 relative overflow-hidden group motion-link',
+                  'px-4 py-2 rounded-xl text-sm rethink-sans-medium transition-all duration-500 relative overflow-hidden group',
                   isActive(item.href)
                     ? isScrolled
                       ? 'text-white backdrop-blur-xl bg-gradient-to-r from-[#0A66C2]/90 to-[#004182]/90 shadow-[0_4px_24px_rgba(10,102,194,0.3)] border border-white/30'
@@ -289,7 +269,6 @@ export default function Navigation() {
 
           {/* Mobile Menu Button */}
           <button
-            type="button"
             className={cn(
               "lg:hidden backdrop-blur-xl p-2 rounded-xl border transition-all duration-500 shadow-lg hover:shadow-xl",
               isScrolled
@@ -297,9 +276,7 @@ export default function Navigation() {
                 : "bg-white/10 hover:bg-white/20 text-white border-white/20 hover:border-white/40"
             )}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-            aria-expanded={isMobileMenuOpen}
-            aria-controls="mobile-navigation"
+            aria-label="Toggle menu"
           >
             {isMobileMenuOpen ? (
               <X size={24} className={cn("drop-shadow-lg", isScrolled ? "text-gray-700" : "text-white")} />
@@ -311,17 +288,12 @@ export default function Navigation() {
 
         {/* Mobile Navigation Menu */}
         {isMobileMenuOpen && (
-          <div
-            id="mobile-navigation"
-            role="region"
-            aria-label="Mobile navigation"
-            className={cn(
-              "lg:hidden max-h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain py-4 border-t animate-fade-in backdrop-blur-2xl",
-              isScrolled
-                ? "border-gray-200/50 bg-white/95"
-                : "border-white/10 bg-gray-900/95"
-            )}
-          >
+          <div className={cn(
+            "lg:hidden py-4 border-t animate-fade-in backdrop-blur-2xl",
+            isScrolled
+              ? "border-gray-200/50 bg-white/95"
+              : "border-white/10 bg-gray-900/95"
+          )}>
             <div className="space-y-2">
               {NAV_ITEMS.map((item) => (
                 <Link
@@ -329,7 +301,7 @@ export default function Navigation() {
                   href={item.href}
                   onClick={(e) => handleSmoothScroll(e, item.href)}
                   className={cn(
-                    'block px-4 py-3 rounded-xl text-base font-medium transition-all duration-500 relative overflow-hidden group motion-link active:scale-[0.99]',
+                    'block px-4 py-3 rounded-xl text-base font-medium transition-all duration-500 relative overflow-hidden group',
                     isActive(item.href)
                       ? 'text-white backdrop-blur-xl bg-gradient-to-r from-[#0A66C2]/80 to-[#004182]/80 shadow-[0_4px_24px_rgba(10,102,194,0.3)] border border-white/30'
                       : isScrolled

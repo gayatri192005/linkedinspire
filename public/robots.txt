@@ -1,3 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /login
+Disallow: /signup
+Disallow: /home
+
 Sitemap: https://linkedinspire.com/sitemap.xml

@@ -63,7 +63,7 @@ export default function ImpactSection() {
           {impactStats.map((stat, index) => {
             const Icon = icons[index]
             return (
-              <div key={stat.label} className="rounded-2xl border border-[#dbe5ef] bg-white p-5 shadow-sm sm:p-6">
+              <div key={stat.label} className="motion-card rounded-2xl border border-[#dbe5ef] bg-white p-5 shadow-sm sm:p-6">
                 <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#eef6fd] text-[#0A66C2]">
                   <Icon size={20} aria-hidden="true" />
                 </div>

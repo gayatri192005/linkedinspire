@@ -11,6 +11,7 @@ import CampusConnectSection from '@/components/sections/CampusConnectSection'
 import ResourcesSection from '@/components/sections/ResourcesSection'
 import FaqSection from '@/components/sections/FaqSection'
 import ContactSection from '@/components/sections/ContactSection'
+import LearningMarquee from '@/components/sections/LearningMarquee'
 
 export const metadata: Metadata = {
   title: 'Your LinkedIn Growth Starts Here',
@@ -22,6 +23,7 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
+      <LearningMarquee />
       <ImpactSection />
       <AboutSection />
       <GrowthSection />

@@ -18,7 +18,7 @@ export default function ProgramsSection() {
         </div>
         <div className="mt-10 grid gap-4 md:grid-cols-2">
           {programs.map((program) => (
-            <article key={program.title} className="flex flex-col justify-between rounded-2xl border border-[#dbe5ef] bg-[#f7f9fc] p-6 sm:flex-row sm:items-end sm:gap-8">
+            <article key={program.title} className="motion-card flex flex-col justify-between rounded-2xl border border-[#dbe5ef] bg-[#f7f9fc] p-6 sm:flex-row sm:items-end sm:gap-8">
               <div>
                 <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#0A66C2]">{program.eyebrow}</p>
                 <h3 className="mt-3 text-xl font-bold text-[#102a43]">{program.title}</h3>

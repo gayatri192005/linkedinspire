@@ -15,7 +15,7 @@ export default function AboutSection() {
           />
           <div className="grid gap-4 sm:grid-cols-3">
             {pillars.map((pillar) => (
-              <article key={pillar.title} className="rounded-2xl border border-[#dbe5ef] bg-[#f7f9fc] p-5">
+              <article key={pillar.title} className="motion-card rounded-2xl border border-[#dbe5ef] bg-[#f7f9fc] p-5">
                 <span className="text-xs font-bold tracking-[0.15em] text-[#0A66C2]">{pillar.number}</span>
                 <h3 className="mt-3 text-xl font-bold text-[#102a43]">{pillar.title}</h3>
                 <p className="mt-3 text-sm leading-6 text-[#53677d]">{pillar.description}</p>

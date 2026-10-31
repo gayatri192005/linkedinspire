@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import { isSupabaseConfigured } from '@/lib/supabase/config'
 import type { User } from '@supabase/supabase-js'
 
 type AuthContextType = {
@@ -16,9 +17,11 @@ const AuthContext = createContext<AuthContextType | null>(null)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading] = useState(isSupabaseConfigured())
 
   useEffect(() => {
+    if (!isSupabaseConfigured()) return
+
     const supabase = createClient()
 
     const {
@@ -32,20 +35,31 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [])
 
   const signIn = async (email: string, password: string) => {
+    if (!isSupabaseConfigured()) {
+      return { error: 'Authentication is unavailable in this preview.' }
+    }
+
     const supabase = createClient()
     const { error } = await supabase.auth.signInWithPassword({ email, password })
     return { error: error?.message ?? null }
   }
 
   const signUp = async (email: string, password: string) => {
+    if (!isSupabaseConfigured()) {
+      return { error: 'Authentication is unavailable in this preview.' }
+    }
+
     const supabase = createClient()
     const { error } = await supabase.auth.signUp({ email, password })
     return { error: error?.message ?? null }
   }
 
   const signOut = async () => {
-    const supabase = createClient()
-    await supabase.auth.signOut()
+    if (isSupabaseConfigured()) {
+      const supabase = createClient()
+      await supabase.auth.signOut()
+    }
+
     setUser(null)
   }
 
